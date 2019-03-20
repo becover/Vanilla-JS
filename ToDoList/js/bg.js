@@ -10,13 +10,11 @@ function paintImage(imgNumber) {
 }
 
 function genRandom() {
-  const number = Math.floor(Math.random() * IMG_NUMBER);
-  return number;
+  return Math.floor(Math.random() * IMG_NUMBER);
 }
 
 function init() {
-  const randomNumber = genRandom();
-  paintImage(randomNumber);
+  paintImage(genRandom());
 }
 
 init();
