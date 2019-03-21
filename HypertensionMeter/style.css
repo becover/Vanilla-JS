@@ -1,0 +1,12 @@
+* {margin:0; padding:0;}
+ul, li {list-style: none;}
+section {width:500px; margin:0 auto; padding:20px; text-align:center;}
+section div {margin:20px;}
+.signalLight ul:after {content:''; display:block; clear:both;}
+.signalLight ul li {display: inline-block; vertical-align:middle; width:90px; height:90px; line-height:90px; border-radius:50%; border:1px solid #ddd; background: rgb(224, 224, 224); color: rgb(224, 224, 224);}
+.green.on {background-color:green; color:#fff;}
+.yellow.on {background-color:rgb(255, 230, 0); color:#666;}
+.red.on {background-color:red; color:#fff;}
+input {padding:10px;}
+input:not([type="button"]) {border:none; border-bottom:1px solid #999;}
+input[type="button"] {border-radius:5px; background:rgb(187, 187, 187);}

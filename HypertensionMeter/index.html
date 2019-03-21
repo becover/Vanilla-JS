@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang ="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-compatible" content="ie=edge">
+    <title>고혈압측정기</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <section>
+      <h1>고혈압 측정하기</h1>
+      <div class="input_maxinum">
+        <lable for="maximum">수축기 혈압 : </lable>
+        <input type="number" id="maximum" placeholder="최고혈압을 입력해 주세요" /> mmHg
+      </div>
+      <div class="input_mininum">
+        <lable for="minimum">수축기 혈압 : </lable>
+        <input type="number" id="minimum" placeholder="최저혈압을 입력해 주세요" /> mmHg
+      </div>
+      <div class="signalLight">
+        <ul>
+          <li class="green">정상</li>
+          <li class="yellow">고혈압 주의</li>
+          <li class="red">고혈압</li>
+        </ul>
+      </div>
+      <input type="button" id="result" value="확인하기" />
+      <input type="button" id="refresh" value="다시하기" />
+    </section>
+    <script src="meter.js"></script>
+  </body>
+</html>
