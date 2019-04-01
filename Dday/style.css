@@ -1,0 +1,42 @@
+@charset "utf-8";
+/*CSS Style Document*/
+
+body {background:rgb(255, 232, 128);}
+#dayWrap {margin:30px 15%; padding:50px 5%; border-radius:30px; background:rgba(255,255,255,.8);}
+#userWrap {margin-top:30px; }
+h1, h1+p, .block_input, .block_btn {text-align:center; padding:10px 0;}
+input {border:none;}
+input:not([type="button"]) {border-bottom:2px solid #ef3583;}
+/*.form_dDay*/
+.block_input input {display:inline-block; padding:5px 10px; width:300px; height:30px;}
+.block_btn input {padding:10px 20px; border-radius:30px; border:2px solid #ef3583; font-size:1rem; background:rgba(255,255,255,0.001);}
+.block_btn.chk input {background:#ef3583; color:#fff; transition:ease-in .4s;}
+.dDay_list li:after {content:''; display:block; clear:both;}
+.dDay_list li:before {content:''; position:absolute; top:0; left:0; display:inline-block; width:41px; height:43px; background:url('images/icon.png') no-repeat;}
+.dDay_list li {position:relative; width:100%; padding-left:50px; margin:20px 0;}
+.dDay_list li div {float:left;}
+.dDay_list .item_division {width:70%;}
+.dDay_list .item_dDay {width:30%; height:42px; line-height:42px; font-size:24px; color:#ef3583; font-weight:800; text-align:right;}
+.dDay_list li div span {display:block; width:100%;}
+/*.block_option*/
+
+.block_option {display:none; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);background:#fff; border-radius:10px; width:50%; height:360px; padding:30px; text-align:center;}
+.block_option .block_option-align:after {content:''; display:block; clear:both;}
+.block_option .block_option-align {display:inline-block; width:100%;}
+.block_option .block_option-align > div {float:left; border-right:1px dashed #ef3583; padding:0 11%; margin-top:30px;}
+.block_option .block_option-align > div:nth-of-type(3), .block_option > div:nth-of-type(4) {border-right:0;}
+.block_option .block_option-align > div ul li {height:40px; line-height:2;}
+
+.block_option .block_option-align .check_repeat {padding-bottom:40px;}
+.block_option .block_option-align .select_icon label {display:inline-block; width:28px; height:29.4px; background:url('images/icon.png') 0 0/cover no-repeat;}
+.block_option .block_option-align .select_icon li {margin:20px 0;}
+.block_option .block_option-align .select_icon li:nth-of-type(2) label {background-position:-28px 0;}
+.block_option .block_option-align .select_icon li:nth-of-type(3) label {background-position:-56px 0;}
+.block_option .block_option-align > div ul li input {display:none;}
+.block_option .block_option-align > div ul li label {position:relative; cursor:pointer;}
+.block_option .block_option-align > div ul li input:checked + label:after {content:''; display:block; position:absolute; top:-7px; left:-12px; border:2px solid #ef3583; border-radius:20px; width:100%; height:100%; padding:5px 10px;}
+.block_option .option_btn {text-align:center; width:100%; margin-top:20px;}
+.block_option .option_btn a {position:absolute; top:20px; right:20px;}
+.block_option .option_btn.chk input {padding:10px 20px; border-radius:30px; font-size:1rem; background:#ef3583; color:#fff;}
+
+.on {display:block;}

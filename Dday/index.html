@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>디데이</title>
+  <link rel="stylesheet" href="base.css" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
@@ -19,72 +21,109 @@
 
         <div class="block_input">
 
-          <label for="input_dDay-title1"> </label>
-          <input type="text" placeholder="제목을 입력하세요." id="input_dDay-title2" />
-          <label for="input_dDay-date1"> </label>
-          <input type="date" id="input_dDay-date1" />
+          <label for="input_dDay-title"> </label>
+          <input type="text" placeholder="제목을 입력하세요." id="input_dDay-title" />
+          <label for="input_dDay-date"> </label>
+          <input type="date" id="input_dDay-date" />
 
-        </div><!--block_input-->
+        </div><!--//block_input-->
 
         <div class="block_btn">
 
-          <input type="button" value="디데이 만들기" />
+          <input type="button" value="디데이 추가하기" id="btn_add-dDay" />
 
-        </div><!--block_btn-->
+        </div><!--//block_btn-->
+
+        <div class="dDay_list">
+          <ul>
+            <li class="dDay_list-item">
+              <div class="item_division">
+                <span class="item_title">Title</span>
+                <span class="item_inputed_day">yyyy/mm/dd</span>
+              </div>
+              <div class="item_dDay">3일</div>
+            </li>
+          </ul>
+        </div><!--//dDay_list-->
 
         <div class="block_option">
 
-          <div class="sorting_count">
-            <ul>
-              <li>
-                <label for="from_zero">디데이(0일부터)</label>
-                <input type="radio" id="from_zero" name="sorting" checked="checked" />
-              </li>
-              <li>
-                <label for="from_one">기념일(1일부터)</label>
-                <input type="radio" id="from_one" name="sorting" />
-              </li>
-              <li>
-                <label for="from_month">개월수</label>
-                <input type="radio" id="from_month" name="sorting" />
-              </li>
-              <li>
-                <label for="from_weeks">주수</label>
-                <input type="radio" id="from_weeks" name="sorting" />
-              </li>
-              <li>
-                <label for="from_yymmdd">년월일</label>
-                <input type="radio" id="from_yymmdd" name="sorting" />
-              </li>
-            </ul>
-          </div><!--sorting_count-->
+          <div class="block_option-align">
 
-          <div class="check_repeat">
-            <ul>
-              <li>
-                <label for="repeat_none">반복 안함</label>
-                <input type="radio" id="repeat_none" name="repeat" checked="checked" />
-              </li>
-              <li>
-                <label for="repeat_month">매월 반복</label>
-                <input type="radio" id="repeat_month" name="repeat" />
-              </li>
-              <li>
-                <label for="repeat_year">매년 반복</label>
-                <input type="radio" id="repeat_year" name="repeat" />
-              </li>
-              <li>
-                <label for="repeat_lunar">음력 반복</label>
-                <input type="radio" id="repeat_lunar" name="repeat" />
-              </li>
-            </ul>
-          </div><!--check_repeat-->
-          <div class="select_icon">
+            <div class="sorting_count">
+              <ul>
+                <li>
+                  <input type="radio" id="from_zero" name="sorting" checked="checked" />
+                  <label for="from_zero">디데이(0일부터)</label>
+                </li>
+                <li>
+                  <input type="radio" id="from_one" name="sorting" />
+                  <label for="from_one">기념일(1일부터)</label>
+                </li>
+                <li>
+                  <input type="radio" id="from_month" name="sorting" />
+                  <label for="from_month">개월수</label>
+                </li>
+                <li>
+                  <input type="radio" id="from_weeks" name="sorting" />
+                  <label for="from_weeks">주수</label>
+                </li>
+                <li>
+                  <input type="radio" id="from_yymmdd" name="sorting" />
+                  <label for="from_yymmdd">년월일</label>
+                </li>
+              </ul>
+            </div><!--//sorting_count-->
+  
+            <div class="check_repeat">
+              <ul>
+                <li>
+                  <input type="radio" id="repeat_none" name="repeat" checked="checked" />
+                  <label for="repeat_none">반복 안함</label>
+                </li>
+                <li>
+                  <input type="radio" id="repeat_month" name="repeat" />
+                  <label for="repeat_month">매월 반복</label>
+                </li>
+                <li>
+                  <input type="radio" id="repeat_year" name="repeat" />
+                  <label for="repeat_year">매년 반복</label>
+                </li>
+                <li>
+                  <input type="radio" id="repeat_lunar" name="repeat" />
+                  <label for="repeat_lunar">음력 반복</label>
+                </li>
+              </ul>
+            </div><!--//check_repeat-->
+  
+            <div class="select_icon">
+              <ul>
+                <li>
+                  <input type="radio" id="icon_basic" name="icon" checked="checked" />
+                  <label for="icon_basic"></label>
+                </li>
+                <li>
+                  <input type="radio" id="icon_check" name="icon" />
+                  <label for="icon_check"></label>
+                </li>
+                <li>
+                  <input type="radio" id="icon_hart" name="icon" />
+                  <label for="icon_hart"></label>
+                </li>
+              </ul>
+            </div><!--//select_icon-->
 
-          </div><!--select_icon-->
-        </div><!--block_option-->
+          </div><!--//block_option-align-->
+
+          <div class="option_btn chk">
+            <input type="button" value="선택완료" id="btn_add-option" />
+            <a href="#" id="btn_close">닫기</a>
+          </div><!--//option_btn-->
+
+        </div><!--//block_option-->
+
       </form>
-    </div><!--userWrap-->
+    </div><!--//userWrap-->
   </section>
 </body>
 </html>
