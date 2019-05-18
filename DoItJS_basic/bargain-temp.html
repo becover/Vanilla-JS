@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>할인 가격 계산 프로그램 - 연산자 활용</title>
+  <style>
+  * {margin:0; padding:0;}
+  @keyframes flutter {
+    0%{
+      transform:rotate(10deg)
+    } 
+    50% {
+      transform:rotate(8deg)
+    }
+    100% {
+      transform:rotate(10deg)
+    }
+  }
+  #wrap {width:700px; padding:100px; border: 2px dashed #3cffd8a8;}
+
+  .postIt {width:300px; height:50%; float:left; position:relative;}
+  .postIt .paper {position:relative; top:0; left:0; width:200px; height:200px; background:rgba(252, 230, 31, 0.808); transform-origin:0 0; animation:flutter 3s ease-in-out infinite;}
+  .postIt .paper .text {position:absolute; top:50%; left:50%; color:brown; font-size:50px; font-weight:900; transform:translate(-50%, -50%) rotate(-5deg)}
+  .postIt .tape {position:absolute; top:3px; left:-15px; width:70px; height:20px; background:rgba(31, 127, 252, 0.808); transform:rotate(-25deg)}
+
+  form {width:50%; height:50%; float:left; margin-top:50px;}
+  fieldset {border:0 none;}
+  legend {display:none;}
+  form div {margin-bottom:15px;}
+  form div label {display:inline-block; width:100px; text-align:right;}
+  form input {width:200px; height:25px; text-align:center; border-radius:5px; border:1px solid #333; outline:none;}
+  form input:not(:invalid) {border-color:#333;}
+  form input:valid {border-color:royalblue;}
+  input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {-webkit-appearance:none; margin:0;}
+  form button {display:inline-block; width:350px; height:35px; margin-top:10px; background:#fff; border:1px solid #333; font-size:16px; border-radius:5px; transition:ease-in-out .2s;}
+  form button:hover {border-radius:0; color:royalblue; border-color:royalblue; cursor:pointer;}
+
+  .result:before {content:''; display:block; clear:both;}
+  .result {margin-top:230px; text-align:center; font-size:18px;}
+  </style>
+</head>
+<body>
+  <div id="wrap">
+    <div class="postIt">
+      <div class="paper">
+        <div class="text">SALE</div>
+      </div>
+      <div class="tape"></div>
+    </div>
+    <form>
+      <fieldset>
+        <legend>가격 입력창</legend>
+          <div>
+            <label for="originalPrice">원래가격</label>
+            <input type="number" id="originalPrice" required pattern="[0-9]+" /> 원
+          </div>
+          <div>
+            <label for="rate">할인율</label>
+            <input type="number" id="rate" required /> %
+          </div>
+          <button class="btn">할인 가격 계산하기</button>
+      </fieldset>
+    </form>
+    <div class="result">
+      <p>result</p>
+    </div>
+  </div><!--//wrap-->
+  <script>
+    const originPrice = document.querySelector("#originalPrice"),
+      rate = document.querySelector("#rate"),
+      btn = document.querySelector(".btn"),
+      result = document.querySelector(".result p"); 
+    
+    function showPrice() {
+      const originPriceValue = originPrice.value;
+      const rateValue = rate.value;
+      const savedPrice = Math.ceil(originPriceValue * (rateValue / 100));
+      const resultPrice = originPriceValue - savedPrice;
+      if (!originPriceValue || !rateValue) {
+        alert("숫자를 입력해 주세요");
+        return;
+      }
+      result.innerHTML = "상품의 원래 가격은" + originPriceValue + "원이고, 할인률은 "+ rateValue + "% 입니다.<br />약 " + savedPrice + "원을 절약한 " + resultPrice + "원에 살 수 있습니다.";
+    };
+    
+    function handleSubmit(event) {
+      event.preventDefault();
+      showPrice();
+      document.querySelector("form").reset();
+    };
+    
+    function init() {
+    btn.addEventListener("click", handleSubmit);
+    };
+
+    init();
+
+  </script>
+</body>
+</html>
