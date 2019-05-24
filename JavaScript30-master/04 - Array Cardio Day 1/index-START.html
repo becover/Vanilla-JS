@@ -43,6 +43,9 @@
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors' first and last names
+    //발명가의 이름과 성을 알려주세요.
+    const name = inventors.map(name => `${name.first} ${name.last}`)
+    console.table(name);
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
