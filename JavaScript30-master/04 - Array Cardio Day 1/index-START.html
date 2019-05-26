@@ -38,7 +38,7 @@
     //     return true; // keep it!
     //   }
     // });
-    const fifteen = inventors.filter(inventor => (inventor.year >= 1500 && inventor.year < 1600))
+    const fifteen = inventors.filter(inventor => (inventor.year >= 1500 && inventor.year < 1600));
     console.table(fifteen);
 
     // Array.prototype.map()
@@ -49,23 +49,55 @@
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    //발명가들의 생일을 연장자부터 젊은이까지 정렬하세요.
+
+    const birthday = inventors.sort((a, b) => a.year - b.year);
+    console.table(birthday);
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live?
+    //발명가가 몇 년이나 살았습니까?
+    const livedYear = (obj) => obj.passed - obj.year;
+    const livedYears = inventors.reduce((acc, curr) => {
+      //acc.push(`${curr.first} ${curr.last} : ${livedYear(curr)}`);
+      acc.push({...curr, lived:livedYear(curr)})
+      return acc;
+    },[]);
+    console.table(livedYears);
 
     // 5. Sort the inventors by years lived
+    // 발명가의 나이순으로 정렬하세요.
+    const sortedInventors = livedYears.sort((a, b) => a.lived - b.lived);
+    console.table(sortedInventors);
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
-
+    // const cate = document.querySelector('.mw-category');
+    // const aLink = [...cate.querySelectorAll('a')];
+    // const aTxt = aLink.map(aEl => aEl.text).filter(txt => txt.indexOf('de ') !== -1);
+    // console.table(aTxt);
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    // people 배열에서 알파벳 순서로 이름을 정렬하세요.
+    console.log(people[0].split(', ')[0]);
+    const sortedName = people.sort((a, b) => {
+        const beforePara = a.split(', ')[1];
+        const afterPara = b.split(', ')[1];
+        return beforePara[0].charCodeAt() - afterPara[0].charCodeAt();       
+      });
+    console.table(sortedName);
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
+    //각 인트턴스의 합계를 구하세요.
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
 
+    const sumation = data.reduce((acc, curr) => {
+      acc[curr] ? acc[curr]++ : acc[curr] = 1;
+      return acc;
+    },{});
+    console.table(sumation);
   </script>
 </body>
 </html>
