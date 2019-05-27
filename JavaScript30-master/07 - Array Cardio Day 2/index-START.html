@@ -26,7 +26,15 @@
 
     // Some and Every Checks
     // Array.prototype.some() // is at least one person 19 or older? 19세 이상의 사람이 적어도 한 명입니까?
+    const now = new Date();
+    const year = now.getFullYear(); 
+    const getAge = age => year - age.year >= 19
+    const adult = people.some(getAge);
+    console.log(adult);
+
     // Array.prototype.every() // is everyone 19 or older? 모두 19세 이상입니까?
+    const everyAdult = people.every(getAge);
+    console.log(everyAdult)
 
     // Array.prototype.find()
     // Find is like filter, but instead returns just the one you are looking for
@@ -41,7 +49,7 @@
     //comment에 있는 ID를 찾아서 ID 번호가 823423 인 객체를 삭제하십시오.
     const findIdx = comments.findIndex(idNumber => idNumber.id === 823423);
     console.log(findIdx);
-    delete comments[1];
+    comments.splice(findIdx, 1);
     console.log(comments);
 
 
