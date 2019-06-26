@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Calcurator</title>
+    <meta charset="UTF-8" />
+    <link href="src/styles.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div id="wrap">
+      <form class="js-form">
+        <fieldset>
+          <legend>JS로 계산기 구현하기</legend>
+
+          <label for="result">입력 결과</label>
+          <input type="text" id="result" />
+          <label for="inputData">계산기 입력창</label>
+          <input type="text" id="inputData" placeholder="0" />
+
+          <div class="history">
+            <h3>계산 기록 보기</h3>
+            <ul>
+              <li></li>
+            </ul>
+          </div>
+
+          <div class="btnContainer">
+            <button data-key="27" value="Escape" class="func esc">C</button>
+            <button data-key="40" class="func bracket">( )</button>
+            <button data-key="37" value="7" class="func operator">%</button>
+            <button data-key="47" value="÷" class="func operator">÷</button>
+            <button data-key="55" value="7" class="num">7</button>
+            <button data-key="56" value="8" class="num">8</button>
+            <button data-key="57" value="9" class="num">9</button>
+            <button data-key="42" value="×" class="func operator">×</button>
+            <button data-key="52" value="4" class="num">4</button>
+            <button data-key="53" value="5" class="num">5</button>
+            <button data-key="54" value="6" class="num">6</button>
+            <button data-key="109" value="-" class="func operator">-</button>
+            <button data-key="49" value="1" class="num">1</button>
+            <button data-key="50" value="2" class="num">2</button>
+            <button data-key="51" value="3" class="num">3</button>
+            <button data-key="107" value="+" class="func operator">+</button>
+            <button data-key="" class="func posiAndNeg">+/-</button>
+            <button data-key="48" value="0" class="num">0</button>
+            <button data-key="110" value="." class="func point">.</button>
+            <button data-key="13" value="Enter" class="equals">=</button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+    <script src="src/index.js"></script>
+  </body>
+</html>
