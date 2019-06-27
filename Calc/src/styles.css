@@ -76,6 +76,19 @@ body {
   height: 100%;
   box-sizing: border-box;
 }
+
+@keyframes floating {
+  0% {
+    transform:translateY(-80%) rotate(-45deg);
+  } 
+  50% {
+    transform:translateY(-7%) rotate(-45deg);
+  } 
+  100% {
+    transform:translateY(-80%) rotate(-45deg);
+  }
+}
+
 #wrap {
   background: linear-gradient(rgb(71, 37, 221), rgb(1, 172, 172));
   min-height: 100%;
@@ -88,16 +101,27 @@ form {
   padding: 6%;
   box-shadow: 0 4px 3px rgba(0, 0, 0, 0.3);
 }
+
+.inputContainer {
+  padding:1px;
+  border: 1px solid #dfdfdf;
+  border-radius:5px;
+}
+
 input[type="text"] {
   padding: 0 10px;
   width: 100%;
   height: 40px;
   max-height: 70px;
   text-align: right;
+  border: 0 none;
+  border-radius:5px;
+  outline-color:#fff;
+}
 
-  /* border: 0 none;
-  border-bottom: 1px solid rosybrown;
-} */
+input[type="text"]#result {
+  font-size: 12px;
+  color:#999;
 }
 
 input[type="text"]#inputData {
@@ -111,18 +135,86 @@ input[type="text"]#inputData {
   cursor: pointer;
   transition: ease-in-out 0.2s;
 }
+
+.history h3 {
+  display:none;
+  position: relative;
+  width:140px;
+  margin:0 auto 10px;
+  color:#999;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 400;
+  transition:ease-in-out .4s;
+  opacity:0;
+}
+
+.history h3:before,h3:after {
+  content:'';
+  display:inline-block;
+  position: absolute;
+  top:50%;
+  width:7px;
+  height:7px;
+  border-left:1px solid cornflowerblue;
+  border-bottom:1px solid cornflowerblue;
+  transition:ease-in-out .5s;
+  transform:rotate(-45deg);
+  opacity:0;
+}
+
+.history h3:before {
+  left:0;
+}
+
+.history h3:after {
+  right:0;
+}
+
+.on {
+  display:block !important;
+  opacity:1 !important;
+}
+
+/* .history h3.close.on ul {
+  height:100%;
+}
+
+.history ul{
+  height:0;
+} */ 
+
+.history ul li {
+  padding:5px;
+  text-align:right;
+  border-top:.5px dashed rgb(219, 219, 219);
+}
+
+.history ul li:first-of-type {
+  border-top:0 none;
+}
+
+.history ul li p {
+  padding:3px 0;
+  font-size:13px;
+  color:#aaa;
+}
+
 .history:hover {
   border-color: cornflowerblue;
 }
 .history:hover h3 {
   color: cornflowerblue;
 }
-.history h3 {
-  text-align: center;
-  font-size: 15px;
-  font-weight: 300;
+
+.history:hover h3:before, .history:hover h3:after{
+  opacity:1;
+  animation: floating .9s ease-in-out forwards infinite;
 }
 
+.history ul li:hover p {
+  color:#666;
+}
 .btnContainer {
   margin: 10px 0;
 }
@@ -131,13 +223,21 @@ button {
   display: block;
   width: 23%;
   height: 40px;
-  margin: 1%;
+  margin: 1.5% 1%;
   float: left;
   border: 1px solid #dfdfdf;
+  border-radius:5px;
   background: #fff;
   font-size: 16px;
+  transition:ease-in-out .3s;
   cursor: pointer;
 }
+
+button:hover {
+  border: 1px solid rgb(99, 135, 243);
+  box-shadow: 0 3px 0 rgba(14, 63, 197, 0.4);
+}
+
 button.func {
   color: royalblue;
   font-weight: 500;
