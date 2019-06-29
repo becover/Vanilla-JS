@@ -6,26 +6,28 @@ const record = document.querySelector('.history ul');
 const CLASS_ON = 'on';
 
 
-function toggleClass() {
-  if(h3[0].classList.contains(CLASS_ON)) {
-    h3[0].classList.remove(CLASS_ON);
-    h3[1].classList.add(CLASS_ON);
-  } else {
-    h3[0].classList.add(CLASS_ON);
-    h3[1].classList.remove(CLASS_ON);
-  }
-}  
-  function toggleEvent() {
-    h3.addEventListener('click', toggleClass)
-  }
+// function toggleClass() {
+//   if(h3[0].classList.contains(CLASS_ON)) {
+//     h3[0].classList.remove(CLASS_ON);
+//     h3[1].classList.add(CLASS_ON);
+//   } else {
+//     h3[0].classList.add(CLASS_ON);
+//     h3[1].classList.remove(CLASS_ON);
+//   }
+// }  
+// function toggleEvent() {
+//   h3.addEventListener('click', toggleClass)
+// }
   
-  function divideKey(e) {
-  console.log(e)
+function divideKey(e) {
   const button = document.querySelector(`button[value="${e.key}"]`);
-  console.log(button)
   const getClass = (className) => button.classList.contains(className);
-  
-
+  //backspace
+  if(e.keyCode === 8) { 
+    result.value = result.value.substring(0,result.value.length-1);
+    input.value = eval(result.value);
+  }
+  //enter
   if (e.keyCode === 13) {            // enter키 누르면
     input.value = eval(result.value) // 지금까지의 식을 계산하기
     //계산 기록으로 내보내기
@@ -40,6 +42,7 @@ function toggleClass() {
     result.value = '';
   }
 
+
   (getClass('num'))         // class가 num이면
   ? insertNumber(e)         // 숫자추가
   : (getClass('operator'))  // class가 operator면
@@ -49,8 +52,8 @@ function toggleClass() {
   : false;
 
     function insertNumber(e) {
-      input.value = button['value'];
       result.value += button['value'];
+      input.value = eval(result.value);
     }
 
     function insertOperator(e) {
@@ -69,7 +72,7 @@ function toggleClass() {
         result.value += button['value']
       }
     }
-  toggleEvent()
+  // toggleEvent()
 }
 
 function handleSubmitKeydown(event) {
