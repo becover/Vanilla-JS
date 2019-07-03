@@ -72,7 +72,7 @@ function compareNumber() {
     alert(`10번의 기회를 모두 사용했습니다. 답은 ${correctNumber}입니다. 게임을 다시 시작합니다.`)
     window.location.reload();
   }
-  if(correctNumber.join('') == arr.join('')){
+  if(correctNumber.join('') === arr.join('')){
     countStrike = 4
     countOut = 4 - (countStrike + countBall)
     strike.textContent=`스트라이크 ${countStrike}개`;
@@ -83,7 +83,7 @@ function compareNumber() {
     window.location.reload();
   } else {
     for(let i=0; i<4 ;i++) {
-      if(correctNumber[i] == arr[i]) {
+      if(correctNumber[i] === arr[i]) {
         countStrike++
       } else if(correctNumber.indexOf(arr[i]) > -1 ) {
         countBall++
