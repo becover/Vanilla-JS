@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Gloria+Hallelujah&display=swap');
+body { font-family: 'Gloria Hallelujah', cursive;
+background:#557dba; }
+table { margin:100px auto 0; border-collapse:collapse; background:#557dba; }
+td { width:100px; height:100px; line-height:1; padding-bottom:20px; text-align:center; font-size:4rem; color:#fff; box-sizing:border-box;}
+tr:first-of-type td:nth-of-type(2) { border:3px solid #fff; border-top:0; }
+tr:nth-of-type(2) td { border:3px solid #fff; }
+tr:nth-of-type(2) td:first-of-type  { border-left:0; }
+tr:nth-of-type(2) td:last-of-type { border-right:0; }
+tr:last-of-type td:nth-of-type(2) { border:3px solid #fff; border-bottom:0; }
