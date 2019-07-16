@@ -6,7 +6,6 @@ while(number.length > 0) {
 }
 const bonus = shuffles[shuffles.length-1];
 const lotto = shuffles.slice(0, 6).sort((a,b)=>a-b);
-console.log(`당첨 숫자: ${lotto}, 보너스 숫자: ${bonus}`);
 const ballStyle = {
   basic: {
     display:'inline-block',
@@ -82,7 +81,6 @@ for (let i=0; i< lotto.length; i++) {
     const lottoBall = document.createElement('div'); 
     lottoBall.textContent = lotto[i];
     settingStyle(lottoBall)
-    
     result.appendChild(lottoBall)
   },1000 * (i+1));
 }
