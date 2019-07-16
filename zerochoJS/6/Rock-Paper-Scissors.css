@@ -1,0 +1,4 @@
+#wrap {width:200px; height:200px; padding-top:200px; margin:auto; text-align:center;}
+.computer {width:106px; height:106px;margin:0 auto 20px;}
+.user button {width:60px; height:28px; border-radius: 5px; border-style:none; box-shadow:0 3px 0 royalblue; transition: ease-in-out .3s; cursor: pointer;}
+.user button:hover {box-shadow:none;}
