@@ -24,10 +24,19 @@ document.querySelectorAll('.btn').forEach( btn => {
     const userNum = this.dataset.num;
     const parse = Object.entries(computer).find(v=>v[1][0]===left);
     ([-2, 1].includes(userNum - parse[1][1]))
-    ? result.innerHTML='이겼습니다!'
+    ? (
+      result.innerHTML='이겼습니다!',
+      setTimeout(() => result.innerHTML='' ,1000)
+      )
     : (userNum - parse[1][1] === 0)
-      ? result.innerHTML='무승부!'
-      : result.innerHTML='졌어용 ㅠㅠ..'
+      ? (
+        result.innerHTML='무승부!',
+        setTimeout(() => result.innerHTML='' ,1000)
+        )
+      : (
+        result.innerHTML='졌어용 ㅠㅠ..!',
+        setTimeout(() => result.innerHTML='' ,1000)
+        )
   })
 });
 
