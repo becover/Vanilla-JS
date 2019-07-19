@@ -27,13 +27,17 @@ const play = () => {
 play();
 const results = (string, vari) => {
   result.innerHTML=string;
-  (vari === 'win')
-  ? win++
-  : (vari === 'draw')
-    ? draw++
-    : (vari === 'lose')
-      ? lose++
-      : false;
+  switch (vari) {
+    case 'win':
+      win++;
+      break;
+    case 'draw':
+      draw++;
+      break;
+    case 'lose':
+      lose++;
+      break;
+  }
   count.textContent=`${win}승 ${draw}무 ${lose}패`;
   setTimeout(() => result.innerHTML='' ,1000)  
 }
