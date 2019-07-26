@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>지뢰 찾기</title>
+  <link href="minesweeper.css" rel="stylesheet" />
+</head>
+<body>
+  <input type="number" id="horizontal" placeholder="가로칸수" />
+  <input type="number" id="vertical" placeholder="세로칸수" />
+  <input type="number" id="mine" placeholder="지뢰갯수" />
+  <button id="exec">실행</button>
+  <table id="table">
+    <thead>
+      <tr>
+        <td><span id="timer">0</span>초</td>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <script src="minesweeper.js"></script>
+</body>
+</html>
