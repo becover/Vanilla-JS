@@ -71,59 +71,6 @@
     let isLive = true;
     let username = null;
 
-    // function adventure(username) {
-    //   for (; hero.hp > 0;) {
-    //     const randomMonster = Math.floor(Math.random() * monster.length);
-    //     const log = document.createElement('p');
-    //     log.innerHTML =
-    //       `<span class="hero">${username}</span>님은 <span class="monster">${monster[randomMonster].name}</span>를 만났습니다! 전투가 시작됩니다. `;
-    //     app.appendChild(log);
-    //     for (let k = 0; monster[randomMonster].hp > 0 && hero.hp > 0; k++) {
-    //       monster[randomMonster].hp -= hero.att;
-    //       hero.hp -= monster[randomMonster].att;
-    //       if (monster[randomMonster].hp > 0) {
-    //         const messageOne = document.createElement('p');
-    //         messageOne.innerHTML =
-    //           `<span class="hero">${username}</span>님의 공격에 <span class="monster">${monster[randomMonster].name}</span>의 체력이 ${monster[randomMonster].hp}이 되었습니다.`;
-    //         app.appendChild(messageOne)
-    //       } else {
-    //         hero.exp += monster[randomMonster].exp;
-    //         const messageOne = document.createElement('p');
-    //         messageOne.innerHTML =
-    //           `
-    //           <span class="hero">${username}</span>님의 공격에 <span class="monster">${monster[randomMonster].name}</span>의 체력이 ${monster[randomMonster].hp <= 0?0:monster[randomMonster].hp}이 되었습니다.<br /><br />
-    //           <span class="hero">${username}</span>님이 <span class="monster">${monster[randomMonster].name}</span>를 무찔렀습니다! <span class="win">[ 경험치 +${monster[randomMonster].exp}, 레벨: ${hero.exp >= 100 ? hero.lv += 1 : hero.lv}, 총 경험치: ${hero.exp} ]<span>`;
-    //         app.appendChild(messageOne)
-    //       }
-
-    //       if (monster[randomMonster].hp > 0 && hero.hp > 0) {
-    //         const messageTwo = document.createElement('p');
-    //         messageTwo.innerHTML =
-    //           `<span class="monster">${monster[randomMonster].name}</span>의 공격에 <span class="hero">${username}</span>님의 체력이 ${hero.hp}이 되었습니다.`;
-    //         app.appendChild(messageTwo)
-    //       } else if (monster[randomMonster].hp > 0 && hero.hp <= 0) {
-    //         const messageTwo = document.createElement('p');
-    //         messageTwo.innerHTML =
-    //           `<span class="monster">${monster[randomMonster].name}</span>의 공격에 <span class="hero">${username}</span>님의 체력이 0이 되었습니다. <span class="lose">${monster[randomMonster].name}한테 패배해 버렸습니다...나약해..ㅜㅜ<span>`;
-    //         app.appendChild(messageTwo)
-    //       }
-    //     }
-    //   }
-    // }
-
-    // function start() {
-    //   const username = prompt('용사님의 이름을 입력하세요(10자내외)');
-    //   if (username) {
-    //     const greeting = document.createElement('p');
-    //     greeting.innerHTML = `<b>${username}</b>님의 모험이 시작됩니다. 용사님의 레벨은 ${hero.lv}, 체력은 ${hero.hp} 입니다`;
-    //     app.appendChild(greeting);
-    //   } else if (!username) {
-    //     alert('용사님의 이름을 입력하지 않아 시작할 수 없어요. 다시 시작해주세요!(F5)')
-    //   };
-    //   adventure(username);
-    // }
-
-
     function attackToUser(newMonster, random) {
       user.hp -= newMonster[random].att;
 
@@ -144,7 +91,7 @@
       }
     }
 
-    function attackToMonster(newMonster, random) {
+    function attackToMonster(newMonster, random, loofId) {
       newMonster[random].hp -= user.att;
 
       if (newMonster[random].hp > 0) {
@@ -157,6 +104,8 @@
       if (newMonster[random].hp <= 0) {
         user.exp += newMonster[random].exp;
         user.exp >= 100 ? (user.lv++, user.exp -= 100, user.att += 3, user.hp += 10) : user.exp;
+        clearInterval(loofId);
+
         const message = document.createElement('p');
         message.innerHTML =
           `<b>${username}</b>님이 공격하여 ${newMonster[random].name}의 체력이 모두 소진되었습니다. <b>${username}</b>님이 승리했습니다! ▶[레벨:${user.lv}, 체력:${user.hp}, 공격력:${user.att}, 경험치:${user.exp}]`;
@@ -176,10 +125,18 @@
       message.innerHTML +=
         `  ▶(${newMonster[random].name} 체력:${newMonster[random].hp}, 공격력:${newMonster[random].att}, 경험치:${newMonster[random].exp})`;
       app.appendChild(message);
-      for (; isCombatStatus;) {
-        isCombatStatus && attackToMonster(newMonster, random)
-        isCombatStatus && attackToUser(newMonster, random)
-      }
+      const loofId = setInterval(() => {
+        if (user.hp > 0) {
+          isCombatStatus && attackToMonster(newMonster, random, loofId);
+        } else if (user.hp <= 0) {
+          clearInterval(loofId)
+        }
+        if (newMonster[random].hp > 0) {
+          setTimeout(() => {
+            isCombatStatus && attackToUser(newMonster, random)
+          }, 1000)
+        }
+      }, 1000)
     }
 
     function getUsername() {
