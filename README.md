@@ -1,10 +1,15 @@
 # Vanilla-JS
+
 바닐라JS 공부하며 예제 공부한것들을 올려 놓거나, 토이프로젝트 만들어서 올려두는 곳
 
 최근 보는 서적 또는 블로그, 강의
 
-- 모던자바스크립트입문 
-- Do it Javascript 
+- YOU DON'T KNOW JS
+- 노마드코더
+- 제로초 강좌
+- 벨로퍼트 강좌
+- 모던자바스크립트입문
+- Do it Javascript
 - MDN
 - w3schools
 - 인사이드 자바스크립트
