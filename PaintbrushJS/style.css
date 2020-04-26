@@ -1,0 +1,180 @@
+li {
+  cursor: pointer;
+}
+
+#wrap {
+  margin: 100px auto;
+  width: 630px;
+}
+
+.paint__board {
+  width: 500px;
+  height: 500px;
+  box-shadow: 1px 1px 5px #c0c0c0, -1px 1px 5px #c0c0c0;
+  border-radius: 5px;
+}
+
+.paint__toolA {
+  float: right;
+}
+
+.paint__palette {
+  width: 96px;
+}
+
+.paint__brush:after,
+.paint__palette:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.paint__palette-currentColor {
+  width: 88px;
+  height: 88px;
+  background: #333;
+  margin: 20px 4px 4px;
+  border: 1px solid #dbdbdb;
+}
+.paint__palette .paint__palette-color {
+  float: left;
+  width: 40px;
+  height: 40px;
+  margin: 4px;
+  background: orangered;
+  box-shadow: -0.5px 0.5px 0.8px #c4cbd4, 0.5px 1px 1px #c4cbd4,
+    0px 3px 1px #c4cbd4;
+  border-radius: 3px;
+  border: 0.8px solid #c0c0c0;
+  box-sizing: border-box;
+}
+
+.paint__palette .paint__palette-color.pick {
+  -webkit-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+  box-shadow: none !important;
+}
+
+.paint__brush li {
+  padding: 5px;
+  margin: 8px 4px;
+  text-align: center;
+  border: 1px solid #dfdfdf;
+}
+
+.paint__brush li:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.paint__brush li.pick {
+  border: 1px solid rgb(255, 107, 157);
+}
+
+.paint__brush li h3 {
+  float: right;
+  width: 60%;
+  color: #777;
+  font-size: 13px;
+  font-weight: 400;
+  padding-bottom: 2px;
+}
+
+.paint__brush li span {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  background: rgb(134, 133, 133);
+}
+
+.paint__brush li span.butt {
+  height: 1px;
+  -webkit-transform-origin: right;
+  transform-origin: right;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.paint__brush li span.round {
+  border-radius: 50%;
+}
+
+.paint__toolB,
+.paint__toolC {
+  display: -webkit-box;
+  display: flex;
+}
+
+.paint__toolB,
+.paint__toolC {
+  margin-top: 30px;
+}
+.paint__toolB input[type="range"] {
+  width: 500px;
+  -webkit-appearance: none;
+  vertical-align: middle;
+  outline: none;
+  border: none;
+  padding: 0;
+  background: none;
+}
+
+.paint__toolB input[type="range"]::-webkit-slider-runnable-track {
+  background-color: #d7dbdd;
+  height: 6px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+}
+
+.paint__toolB input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  border-radius: 50%;
+  background-color: #666;
+  height: 18px;
+  width: 18px;
+  margin-top: -7px;
+}
+
+.paint__toolB input[type="range"]:hover::-webkit-slider-thumb {
+  background-color: rgb(255, 107, 157);
+}
+
+.paint__toolB label {
+  margin-left: 38px;
+  width: 88px;
+  border: 1px solid #dfdfdf;
+  text-align: center;
+  font-size: 25px;
+  font-weight: 800;
+  color: #222;
+  padding: 10px 0;
+}
+
+.paint__toolC {
+  position: relative;
+}
+
+.paint__toolC button {
+  -webkit-box-flex: 1;
+  flex: 1;
+  margin: 0 10px;
+  padding: 5px;
+  border: 2px solid #dfdfdf;
+  border-radius: 5px;
+  text-align: center;
+  color: #999;
+}
+.paint__toolC input[type="file"] {
+  width: 30%;
+  position: absolute;
+  right: 10px;
+  padding: 5px 0;
+  opacity: 0;
+}
+
+.paint__toolC input[type="file"]:hover + button,
+.paint__toolC button:hover {
+  border-color: rgb(255, 107, 157);
+  color: #333;
+}
