@@ -33,7 +33,7 @@ li {
   width: 88px;
   height: 88px;
   background: #333;
-  margin: 20px 4px 4px;
+  margin: 4px;
   border: 1px solid #dbdbdb;
 }
 .paint__palette .paint__palette-color {
@@ -55,20 +55,22 @@ li {
   box-shadow: none !important;
 }
 
-.paint__brush li {
+.paint__brush li,
+.paint__history li {
   padding: 5px;
   margin: 8px 4px;
   text-align: center;
   border: 1px solid #dfdfdf;
 }
 
-.paint__brush li:after {
+.paint__history li:after {
   content: "";
   display: block;
   clear: both;
 }
 
-.paint__brush li.pick {
+.paint__brush li.pick,
+.paint__history li:hover {
   border: 1px solid rgb(255, 107, 157);
 }
 
@@ -98,6 +100,16 @@ li {
 
 .paint__brush li span.round {
   border-radius: 50%;
+}
+
+.paint__history li {
+  float: left;
+  width: calc(50% -8px);
+  color: #777;
+  font-size: 13px;
+  font-weight: 400;
+  margin: 0;
+  margin: 2px 4px;
 }
 
 .paint__toolB,
