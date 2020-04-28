@@ -23,7 +23,9 @@ li {
 }
 
 .paint__brush:after,
-.paint__palette:after {
+.paint__palette:after,
+.paint__customPalett:after,
+.paint__customPalett .colorPicker:after {
   content: "";
   display: block;
   clear: both;
@@ -41,7 +43,6 @@ li {
   width: 40px;
   height: 40px;
   margin: 4px;
-  background: orangered;
   box-shadow: -0.5px 0.5px 0.8px #c4cbd4, 0.5px 1px 1px #c4cbd4,
     0px 3px 1px #c4cbd4;
   border-radius: 3px;
@@ -54,6 +55,65 @@ li {
   transition: all 0.2s ease-in;
   box-shadow: none !important;
 }
+
+.paint__customPalett .pipette {
+  text-align: center;
+  font-size: 1.3em;
+  color: rgb(72, 99, 255);
+  padding-top: 4px;
+}
+
+.paint__customPalett li {
+  float: left;
+  width: 40px;
+  height: 40px;
+  margin: 4px;
+  border: 1px solid #dfdfdf;
+  box-sizing: border-box;
+}
+
+.paint__customPalett .pipette:hover,
+.paint__customPalett .pipette.pick {
+  color: rgb(255, 107, 157);
+  border-color: rgb(255, 107, 157);
+}
+.paint__customPalett .colorPicker {
+  background: -webkit-gradient(
+    linear,
+    left top, right top,
+    from(#ff0000),
+    color-stop(#ff9100),
+    color-stop(#ffe600),
+    color-stop(#91ff00),
+    color-stop(#00c3ff),
+    color-stop(#006eff),
+    color-stop(#9900ff),
+    to(#ff00ff)
+  );
+  background: linear-gradient(
+    to right,
+    #ff0000,
+    #ff9100,
+    #ffe600,
+    #91ff00,
+    #00c3ff,
+    #006eff,
+    #9900ff,
+    #ff00ff
+  );
+}
+/* .paint__customPalett .colorPicker span:first-of-type {
+  background: linear-gradient(30deg, #ff0000, #ffe600);
+}
+.paint__customPalett .colorPicker span:nth-of-type(2) {
+  background: linear-gradient(-30deg, #00ffbf, #ffe600);
+}
+.paint__customPalett .colorPicker span:nth-of-type(3) {
+  background: linear-gradient(135deg, #00a2ff, #000cb4);
+}
+.paint__customPalett .colorPicker span:last-of-type {
+  background: linear-gradient(-13545deg, #b700ff, #ff00c8);
+} */
 
 .paint__brush li,
 .paint__history li {
@@ -72,6 +132,15 @@ li {
 .paint__brush li.pick,
 .paint__history li:hover {
   border: 1px solid rgb(255, 107, 157);
+  color: #333;
+}
+
+.paint__brush li.pick h3 {
+  color: #333;
+}
+
+.paint__brush li.pick span {
+  background: #333;
 }
 
 .paint__brush li h3 {
@@ -105,23 +174,20 @@ li {
 .paint__history li {
   float: left;
   width: calc(50% -8px);
-  color: #777;
   font-size: 13px;
-  font-weight: 400;
   margin: 0;
   margin: 2px 4px;
+  color: #777;
 }
 
 .paint__toolB,
 .paint__toolC {
   display: -webkit-box;
   display: flex;
+  margin-top: 30px;
+  width: 500px;
 }
 
-.paint__toolB,
-.paint__toolC {
-  margin-top: 30px;
-}
 .paint__toolB input[type="range"] {
   width: 500px;
   -webkit-appearance: none;
@@ -183,6 +249,7 @@ li {
   right: 10px;
   padding: 5px 0;
   opacity: 0;
+  cursor: pointer;
 }
 
 .paint__toolC input[type="file"]:hover + button,

@@ -4,11 +4,13 @@ const paletteColors = document.getElementsByClassName("paint__palette-color");
 const brushsShape = wrap.querySelectorAll(".paint__brush li");
 const currentColor = wrap.querySelector(".paint__palette-currentColor");
 const brushSize = document.getElementById("paint__brush-size");
+const pipetteButton = wrap.querySelector(".pipette");
 const modeButton = wrap.querySelector(".fill");
 const saveButton = wrap.querySelector(".save");
 const loadButton = wrap.querySelector(".load");
 const undoButton = wrap.querySelector(".undo");
 const redoButton = wrap.querySelector(".redo");
+const CLASS_PICK = "pick";
 
 const undoList = [];
 let redoList = [];
@@ -27,6 +29,7 @@ ctx.lineWidth = 5;
 
 let isPainting = false;
 let isFilling = false;
+let isPipetting = false;
 
 const colors = [
   "#333",
@@ -40,6 +43,21 @@ const colors = [
   "#7a21dc",
   "#ff15ac",
 ];
+
+function onTogglePipetting() {
+  isPipetting = !isPipetting;
+  if (isPipetting) {
+    pipetteButton.classList.add(CLASS_PICK);
+    canvas.addEventListener("mousedown", getColorData);
+  } else {
+    pipetteButton.classList.remove(CLASS_PICK);
+    canvas.removeEventListener("mousedown", getColorData);
+  }
+}
+
+function stopPipetting() {
+  isPipetting = false;
+}
 
 function wheelEventBindBrushSize(e) {
   e.preventDefault();
@@ -110,7 +128,7 @@ function handleSaveButton() {
   const image = canvas.toDataURL("image/png");
   const link = document.createElement("a");
   link.href = image;
-  link.download = "download[piantJS]";
+  link.download = "download[paintJS]";
   link.click();
 }
 
@@ -123,10 +141,10 @@ function handleCanvasClick() {
 }
 
 function handleModeButton() {
-  if (isFilling === true) {
+  if (isFilling) {
     isFilling = false;
     modeButton.innerText = "Fill";
-  } else if (isFilling === false) {
+  } else {
     isFilling = true;
     modeButton.innerText = "Paint";
   }
@@ -141,13 +159,26 @@ function stopPainting() {
   isPainting = false;
 }
 
+function getColorData(e) {
+  const x = e.offsetX;
+  const y = e.offsetY;
+  const pickColorToImage = ctx.getImageData(x, y, 1, 1);
+  const r = pickColorToImage.data[0];
+  const g = pickColorToImage.data[1];
+  const b = pickColorToImage.data[2];
+  const a = pickColorToImage.data[3] / 255;
+  currentColor.style.backgroundColor = `rgba(${r},${g},${b},${a})`;
+  ctx.fillStyle = currentColor.style.backgroundColor;
+  ctx.strokeStyle = currentColor.style.backgroundColor;
+}
+
 function onMouseMove(e) {
   const x = e.offsetX;
   const y = e.offsetY;
   if (!isPainting) {
     ctx.beginPath();
     ctx.moveTo(x, y);
-  } else {
+  } else if (isPainting) {
     ctx.lineTo(x, y);
     ctx.stroke();
   }
@@ -178,8 +209,8 @@ function renderCanvas() {
 function pickBindBrush() {
   brushsShape.forEach((shape) =>
     shape.addEventListener("click", function (e) {
-      brushsShape.forEach((shape) => shape.classList.remove("pick"));
-      e.currentTarget.classList.add("pick");
+      brushsShape.forEach((shape) => shape.classList.remove(CLASS_PICK));
+      e.currentTarget.classList.add(CLASS_PICK);
       ctx.lineCap = e.currentTarget.childNodes[1].innerText;
     })
   );
@@ -187,8 +218,8 @@ function pickBindBrush() {
 
 function addClassPick(e) {
   const arrayColors = Array.from(paletteColors);
-  arrayColors.forEach((color) => color.classList.remove("pick"));
-  e.target.classList.add("pick");
+  arrayColors.forEach((color) => color.classList.remove(CLASS_PICK));
+  e.target.classList.add(CLASS_PICK);
   e.target.style.backgroundColor &&
     (currentColor.style.backgroundColor = e.target.style.backgroundColor);
   ctx.strokeStyle = e.target.style.backgroundColor;
@@ -209,7 +240,7 @@ function createPaletteColors() {
     li.className = "paint__palette-color";
     palette.appendChild(li);
   });
-  wrap.querySelector(".paint__palette-color").classList.add("pick");
+  wrap.querySelector(".paint__palette-color").classList.add(CLASS_PICK);
 }
 
 function init() {
@@ -219,6 +250,7 @@ function init() {
   renderCanvas();
   brushSize.addEventListener("input", bindBrushSize);
   brushSize.addEventListener("wheel", wheelEventBindBrushSize);
+  pipetteButton.addEventListener("click", onTogglePipetting);
   modeButton.addEventListener("click", handleModeButton);
   saveButton.addEventListener("click", handleSaveButton);
   loadButton.addEventListener("change", handleLoadButton);
