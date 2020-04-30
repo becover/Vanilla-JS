@@ -78,6 +78,7 @@ li {
   border-color: rgb(255, 107, 157);
 }
 .paint__customPalett .colorPicker {
+  position: relative;
   background: -webkit-gradient(
     linear,
     left top, right top,
@@ -102,18 +103,18 @@ li {
     #ff00ff
   );
 }
-/* .paint__customPalett .colorPicker span:first-of-type {
-  background: linear-gradient(30deg, #ff0000, #ffe600);
+.paint__customPalett .colorPicker .color__board {
+  display: none;
+  position: absolute;
+  top: 120%;
+  right: 0;
+  z-index: 10;
+  border: 5px solid #dcdcdc;
 }
-.paint__customPalett .colorPicker span:nth-of-type(2) {
-  background: linear-gradient(-30deg, #00ffbf, #ffe600);
+
+.paint__customPalett .colorPicker.pick .color__board {
+  display: block;
 }
-.paint__customPalett .colorPicker span:nth-of-type(3) {
-  background: linear-gradient(135deg, #00a2ff, #000cb4);
-}
-.paint__customPalett .colorPicker span:last-of-type {
-  background: linear-gradient(-13545deg, #b700ff, #ff00c8);
-} */
 
 .paint__brush li,
 .paint__history li {
