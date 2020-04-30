@@ -69,42 +69,48 @@ const colors = [
   "#ff15ac",
 ];
 
-function getColorData(e) {
-  const x = e.offsetX;
-  const y = e.offsetY;
-  if (isPicking) {
-    colorPicker.removeEventListener("mousedown", getColorData);
-    const colorSelectInImage = ctx.getImageData(x, y, 1, 1);
-    const r = colorSelectInImage.data[0];
-    const g = colorSelectInImage.data[1];
-    const b = colorSelectInImage.data[2];
-    const a = colorSelectInImage.data[3] / 255;
-    currentColor.style.backgroundColor = `rgba(${r},${g},${b},${a})`;
-    ctx.fillStyle = currentColor.style.backgroundColor;
-    ctx.strokeStyle = currentColor.style.backgroundColor;
-  }
+const eventPropagationChecker = {
+  getTargetTag: (target, tName) => {
+    while (target && target.tagNage !== tName) {
+      target = target.tagName !== "HTML" ? target.parentNode : false;
+    }
+    return target;
+  },
+};
 
-  if (isPipetting) {
-    canvas.removeEventListener("mousedown", getColorData);
-    const colorSelectInImage = ctx.getImageData(x, y, 1, 1);
-    const r = colorSelectInImage.data[0];
-    const g = colorSelectInImage.data[1];
-    const b = colorSelectInImage.data[2];
-    const a = colorSelectInImage.data[3] / 255;
-    currentColor.style.backgroundColor = `rgba(${r},${g},${b},${a})`;
-    ctx.fillStyle = currentColor.style.backgroundColor;
-    ctx.strokeStyle = currentColor.style.backgroundColor;
+function getRgbaByImageData(imageData) {
+  const [r, g, b, rawAlpha] = imageData.data;
+  const a = rawAlpha / 255;
+  return { r, g, b, a };
+}
+
+function buildRgbaString({ r, g, b, a }) {
+  return `rgba(${r},${g},${b},${a})`;
+}
+
+function setColor2Canvas({ r, g, b, a }) {
+  const colorString = buildRgbaString({ r, g, b, a });
+  currentColor.style.backgroundColor = colorString;
+  ctx.fillStyle = colorString;
+  ctx.strokeStyle = colorString;
+}
+
+function pipetColor(ctx, x, y, e, width = 1, height = 1) {
+  stopPipetting();
+  if (e.target && e.target.tagName === "CANVAS") {
+    console.log(x, y);
+    const imageData = ctx.getImageData(x, y, width, height);
+    const rgbaColor = getRgbaByImageData(imageData);
+    return setColor2Canvas(rgbaColor);
   }
 }
 
-function handleColorBoard() {
-  isPicking = true;
-  colorPicker.addEventListener("mousedown", getColorData);
-}
-
-function handlePipetting() {
+function handlePipetteButton(e) {
   isPipetting = true;
-  canvas.addEventListener("mousedown", getColorData);
+}
+
+function stopPipetting() {
+  isPipetting = false;
 }
 
 function wheelEventBindBrushSize(e) {
@@ -184,8 +190,9 @@ function handleRightClick(e) {
   e.preventDefault();
 }
 
-function handleCanvasClick() {
+function handleCanvasClick(e) {
   isFilling && ctx.fillRect(0, 0, canvas.width, canvas.height);
+  isPipetting && pipetColor(ctx, e.offsetX, e.offsetY, e);
 }
 
 function handleModeButton() {
@@ -278,6 +285,22 @@ function createPaletteColors() {
   wrap.querySelector(".paint__palette-color").classList.add(CLASS_PICK);
 }
 
+function onToggleClassPick(e, clickEl) {
+  if (clickEl) {
+    if (e.currentTarget.classList.contains(CLASS_PICK)) {
+      e.currentTarget.classList.remove(CLASS_PICK);
+    } else {
+      e.currentTarget.classList.add(CLASS_PICK);
+    }
+  }
+}
+
+function handleColorPickerButton(e) {
+  const clickEl = e.currentTarget && e.target.tagName === "LI";
+  onToggleClassPick(e, clickEl);
+  pipetColor(ctx2, e.offsetX, e.offsetY, e);
+}
+
 function init() {
   createPaletteColors();
   pickBindColor();
@@ -285,13 +308,13 @@ function init() {
   renderCanvas();
   brushSize.addEventListener("input", bindBrushSize);
   brushSize.addEventListener("wheel", wheelEventBindBrushSize);
-  pipetteButton.addEventListener("click", handlePipetting);
+  pipetteButton.addEventListener("click", handlePipetteButton);
+  colorPickerButton.addEventListener("click", handleColorPickerButton);
   modeButton.addEventListener("click", handleModeButton);
   saveButton.addEventListener("click", handleSaveButton);
   loadButton.addEventListener("change", handleLoadButton);
   undoButton.addEventListener("click", handleUndoHistory);
   redoButton.addEventListener("click", handleRedoHistory);
-  colorPickerButton.addEventListener("click", handleColorBoard);
 }
 
 init();

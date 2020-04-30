@@ -109,10 +109,10 @@ li {
   top: 120%;
   right: 0;
   z-index: 10;
-  border: 5px solid #dcdcdc;
+  border: 5px solid #c9ccce;
 }
 
-.paint__customPalett .colorPicker.pick .color__board {
+.paint__customPalett .colorPicker.pick > .color__board {
   display: block;
 }
 

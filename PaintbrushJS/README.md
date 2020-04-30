@@ -16,3 +16,12 @@
 <br />
 > 노마드코더 바닐라JS 2번째 강좌 내용을 공부한 토대로
 새로운 기능(기능에 *표시)들을 추가하여 만들어 보았다.
+
+##v1.1.0
+
+### 추가된 기능
+
+- undo, redo를 통한 canvas drawing history관리
+- mouse wheel로 brush size control
+- pipette(색추출)
+- color picker
