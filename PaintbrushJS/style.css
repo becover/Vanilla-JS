@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap");
 li {
   cursor: pointer;
 }
@@ -5,6 +7,27 @@ li {
 #wrap {
   margin: 100px auto;
   width: 630px;
+}
+.paint__boardWrap {
+  display: inline-block;
+  position: relative;
+}
+
+.textLayer {
+  position: absolute !important;
+}
+
+.inputBox {
+  position: absolute;
+  border: 1.5px dashed rgb(164, 235, 71);
+  display: inline-block;
+  font-family: "Black Han Sans", sans-serif;
+  font-family: "Do Hyeon", sans-serif;
+  background-color: transparent;
+  word-wrap: nowrap;
+  word-break: break-all;
+  overflow: hidden;
+  line-height: 1;
 }
 
 .paint__board {
@@ -25,7 +48,8 @@ li {
 .paint__brush:after,
 .paint__palette:after,
 .paint__customPalett:after,
-.paint__customPalett .colorPicker:after {
+.paint__customPalett .colorPicker:after,
+.paint__history:after {
   content: "";
   display: block;
   clear: both;
@@ -51,7 +75,6 @@ li {
 }
 
 .paint__palette .paint__palette-color.pick {
-  -webkit-transition: all 0.2s ease-in;
   transition: all 0.2s ease-in;
   box-shadow: none !important;
 }
@@ -79,18 +102,6 @@ li {
 }
 .paint__customPalett .colorPicker {
   position: relative;
-  background: -webkit-gradient(
-    linear,
-    left top, right top,
-    from(#ff0000),
-    color-stop(#ff9100),
-    color-stop(#ffe600),
-    color-stop(#91ff00),
-    color-stop(#00c3ff),
-    color-stop(#006eff),
-    color-stop(#9900ff),
-    to(#ff00ff)
-  );
   background: linear-gradient(
     to right,
     #ff0000,
@@ -117,7 +128,8 @@ li {
 }
 
 .paint__brush li,
-.paint__history li {
+.paint__history li,
+.paint__text li {
   padding: 5px;
   margin: 8px 4px;
   text-align: center;
@@ -131,7 +143,8 @@ li {
 }
 
 .paint__brush li.pick,
-.paint__history li:hover {
+.paint__history li:hover,
+.paint__text li.pick {
   border: 1px solid rgb(255, 107, 157);
   color: #333;
 }
@@ -162,9 +175,7 @@ li {
 
 .paint__brush li span.butt {
   height: 1px;
-  -webkit-transform-origin: right;
   transform-origin: right;
-  -webkit-transform: rotate(45deg);
   transform: rotate(45deg);
 }
 
@@ -181,9 +192,19 @@ li {
   color: #777;
 }
 
+.paint__text li {
+  float: left;
+  width: calc(33.33% -8px);
+  font-size: 13px;
+  margin: 0;
+  margin: 8px 4px;
+  padding: 4px 8.5px;
+  box-sizing: border-box;
+  color: #777;
+}
+
 .paint__toolB,
 .paint__toolC {
-  display: -webkit-box;
   display: flex;
   margin-top: 30px;
   width: 500px;
@@ -235,7 +256,6 @@ li {
 }
 
 .paint__toolC button {
-  -webkit-box-flex: 1;
   flex: 1;
   margin: 0 10px;
   padding: 5px;

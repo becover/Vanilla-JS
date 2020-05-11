@@ -12,7 +12,9 @@
 
 <body>
   <div id="wrap">
-    <canvas class="paint__board"></canvas>
+    <div class="paint__boardWrap">
+      <canvas class="paint__board"></canvas>
+    </div>
     <div class="paint__toolA">
       <div class="paint__palette-currentColor"></div>
       <ul class="paint__palette"></ul>
@@ -39,6 +41,10 @@
       <ul class="paint__history">
         <li class="undo">undo</li>
         <li class="redo">redo</li>
+      </ul>
+      <ul class="paint__text">
+        <li class="fillText">T</li>
+        <li class="borderText">T</li>
       </ul>
       <span class="paint__toolA-handle"></span>
     </div>
