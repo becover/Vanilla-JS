@@ -38,7 +38,7 @@ let isFilling = false;
 let isPipetting = false;
 let isPicking = false;
 let isWriting = false;
-let lastUseBrushShape;
+let lastUseBrushShape = brushsShape[0];
 
 const canvas = wrap.querySelector(".paint__board");
 const ctx = canvas.getContext("2d");
@@ -280,6 +280,10 @@ function pickBindBrush() {
     shape.addEventListener("click", function (e) {
       brushsShape.forEach((shape) => shape.classList.remove(CLASS_PICK));
       lastUseBrushShape = e.currentTarget;
+      if (isWriting) {
+        isWriting = false;
+        fillTextButton.classList.remove(CLASS_PICK);
+      }
       e.currentTarget.classList.add(CLASS_PICK);
       ctx.lineCap = e.currentTarget.childNodes[1].innerText;
     })
@@ -367,7 +371,7 @@ function getTextareaInfo(textarea) {
     .getComputedStyle(textarea)
     .getPropertyValue("height")
     .slice(0, -2);
-  top = Number(top) + Number((height + 8) / 3);
+  top = Number(top) + (Number(height) + 8) / 3;
   left = Number(left);
   return { text, color, size, top, left };
 }
@@ -381,6 +385,7 @@ function drawText(text, color, size, top, left) {
   ctx.font = `${size} "Do Hyeon"`;
   ctx.fillStyle = color;
   ctx.fillText(text, left + 1, top);
+  stackCanvasHistory();
 }
 
 function onChangeTextColor() {
@@ -415,7 +420,6 @@ function handleFillText(x, y) {
         paintText2canvas(textarea);
         fillTextButton.classList.remove(CLASS_PICK);
         lastUseBrushShape.classList.add(CLASS_PICK);
-        stackCanvasHistory();
       }
     });
   }
