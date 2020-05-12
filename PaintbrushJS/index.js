@@ -14,21 +14,6 @@ const redoButton = wrap.querySelector(".redo");
 const fillTextButton = wrap.querySelector(".fillText");
 const CLASS_PICK = "pick";
 
-// const status = {
-//   history: {
-//     undoList: [],
-//     redoList: [],
-//     poppingLastIndex: true,
-//     poppingAfterIndex: true,
-//   },
-//   canvas: {
-//     isPainting: false,
-//     isFilling: false,
-//     isPipetting: false,
-//     isPicking: false,
-//     isWriting: false,
-//   },
-// };
 const undoList = [];
 let redoList = [];
 let poppingLastIndex = true;
