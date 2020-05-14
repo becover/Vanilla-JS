@@ -24,6 +24,16 @@ let isPipetting = false;
 let isPicking = false;
 let isWriting = false;
 let lastUseBrushShape = brushsShape[0];
+let dragStatus = {
+  startAngle: 0,
+  angle: 0,
+  center: {
+    x: 0,
+    y: 0,
+  },
+  rotation: 0,
+  active: true,
+};
 
 const canvas = wrap.querySelector(".paint__board");
 const ctx = canvas.getContext("2d");
@@ -325,16 +335,41 @@ function handleColorPickerButton(e) {
   pipetColor(pickerCtx, e.offsetX, e.offsetY, e);
 }
 
+function addAttributes(el, x, y) {
+  const MANUAL = `작성 후 엔터를 치세요`;
+  if (el.classList.contains("inputBox")) {
+    el.innerText = MANUAL;
+    el.style.top = `${y}px`;
+    el.style.left = `${x}px`;
+    el.style.maxWidth = `${500 - x}px`;
+    el.style.height = `${+brushSize.value}px`;
+    el.style.color = currentColor.style.backgroundColor;
+    el.style.fontSize = `${+brushSize.value}px`;
+    el.contentEditable = isWriting;
+    el.focus();
+  }
+  if (el.classList.contains("axis")) {
+    const width = getComputedStyleValue(".inputBox", "width");
+    const height = getComputedStyleValue(".inputBox", "height");
+    y > 20
+      ? (el.style.top = `${y - 30}px`)
+      : (el.style.top = `${+height + 30 + y}px`);
+    el.style.left = `${x + width / 2 - 5}px`;
+  }
+}
+
+function getComputedStyleValue(el, style) {
+  const els = document.querySelector(el);
+  const result = window
+    .getComputedStyle(els)
+    .getPropertyValue(style)
+    .slice(0, -2);
+  return result;
+}
+
 function createEl(el, name, parent) {
   const parentEl = parent && document.querySelector(parent);
   const El = document.createElement(el);
-  const MANUAL = `작성 후 엔터를 치세요`;
-  if (el === "input") {
-    El.type = "text";
-    El.value = MANUAL;
-  } else {
-    El.innerText = MANUAL;
-  }
   El.classList.add(name);
   parentEl.appendChild(El);
   return El;
@@ -342,27 +377,21 @@ function createEl(el, name, parent) {
 
 function getTextareaInfo(textarea) {
   const text = textarea.innerText;
-  const color = window.getComputedStyle(textarea).getPropertyValue("color");
-  const size = window.getComputedStyle(textarea).getPropertyValue("font-size");
-  let top = window
-    .getComputedStyle(textarea)
-    .getPropertyValue("top")
-    .slice(0, -2);
-  let left = window
-    .getComputedStyle(textarea)
-    .getPropertyValue("left")
-    .slice(0, -2);
-  const height = window
-    .getComputedStyle(textarea)
-    .getPropertyValue("height")
-    .slice(0, -2);
+  const color = getComputedStyleValue(textarea, "color");
+  const size = getComputedStyleValue(textarea, "font-size");
+  let top = getComputedStyleValue(textarea, "top");
+  let left = getComputedStyleValue(textarea, "left");
+  const height = getComputedStyleValue(textarea, "height");
   top = Number(top) + (Number(height) + 8) / 3;
   left = Number(left);
   return { text, color, size, top, left };
 }
 
-function removeTextarea(el) {
-  return el.remove();
+function removeElement(...els) {
+  console.log(els);
+  return els.forEach((el) => {
+    el.remove();
+  });
 }
 
 function drawText(text, color, size, top, left) {
@@ -388,33 +417,60 @@ function onChangeTextSize() {
   }
 }
 
+function dragStart(e) {
+  e.preventDefault();
+  const textarea = document.querySelector(".inputBox");
+  const { top, left, height, width } = textarea.getBoundingClientRect();
+  const { center } = dragStatus;
+  (center.x = left + width / 2), (center.y = top + height / 2);
+  const x = e.clientX - center.x;
+  const y = e.clientY - center.y;
+  dragStatus["startAngle"] = (180 / Math.PI) * Math.atan2(y, x);
+  dragStatus["active"] = true;
+  console.log(dragStatus);
+}
+
+function dragRotate(e) {
+  e.preventDefault();
+  const textarea = document.querySelector(".inputBox");
+  let { startAngle, angle, center, rotation, active } = dragStatus;
+  const x = e.clientX - center.x;
+  const y = e.clientY - center.y;
+  const distance = (180 / Math.PI) * Math.atan2(y, x);
+  rotation = distance - startAngle;
+  active && (textarea.style.transform = `rotate(${angle + rotation}deg)`);
+}
+
+function dragStop() {
+  dragStatus["angle"] += dragStatus["rotation"];
+  dragStatus["active"] = false;
+}
+
 function handleFillText(x, y) {
   if (document.querySelector(".inputBox") === null) {
     const textarea = createEl("span", "inputBox", ".paint__boardWrap");
-    textarea.style.top = `${y}px`;
-    textarea.style.left = `${x}px`;
-    textarea.style.maxWidth = `${500 - x}px`;
-    textarea.style.height = `${+brushSize.value}px`;
-    textarea.style.color = currentColor.style.backgroundColor;
-    textarea.style.fontSize = `${+brushSize.value}px`;
-    textarea.contentEditable = isWriting;
-    textarea.focus();
+    const axis = createEl("span", "axis", ".paint__boardWrap");
+    addAttributes(textarea, x, y);
+    addAttributes(axis, x, y);
     textarea.addEventListener("keydown", function (e) {
       if (e.keyCode === 13) {
         e.preventDefault();
-        paintText2canvas(textarea);
+        paintText2canvas(textarea, axis);
         fillTextButton.classList.remove(CLASS_PICK);
         lastUseBrushShape.classList.add(CLASS_PICK);
       }
     });
+    axis.addEventListener("mousedown", dragStart, false);
+    axis.addEventListener("mousemove", dragRotate, false);
+    axis.addEventListener("mouseup", dragStop, false);
   }
 }
 
-function paintText2canvas(textarea) {
+function paintText2canvas(textarea, axis) {
   if (isWriting) {
     isWriting = false;
     const { text, color, size, top, left } = getTextareaInfo(textarea);
-    removeTextarea(textarea);
+    removeElement(textarea, axis);
     drawText(text, color, size, top, left);
   }
 }

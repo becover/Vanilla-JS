@@ -24,10 +24,17 @@ li {
   font-family: "Black Han Sans", sans-serif;
   font-family: "Do Hyeon", sans-serif;
   background-color: transparent;
-  word-wrap: nowrap;
+  word-wrap: break-word;
   word-break: break-all;
-  overflow: hidden;
   line-height: 1;
+}
+
+.axis {
+  display: inline-block;
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: rgb(164, 235, 71);
 }
 
 .paint__board {
