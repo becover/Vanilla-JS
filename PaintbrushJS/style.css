@@ -26,7 +26,12 @@ li {
   background-color: transparent;
   word-wrap: break-word;
   word-break: break-all;
+  overflow: hidden;
   line-height: 1;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .axis {
