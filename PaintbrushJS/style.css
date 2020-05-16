@@ -8,9 +8,27 @@ li {
   margin: 100px auto;
   width: 630px;
 }
+/* layout__top */
+.layout__top:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.layout__top .layout__top-left {
+  float: left;
+}
+.layout__top .layout__top-right {
+  float: right;
+}
+
+/* layout__top-left */
 .paint__boardWrap {
   display: inline-block;
   position: relative;
+  overflow: hidden;
+  box-shadow: 1px 1px 5px #c0c0c0, -1px 1px 5px #c0c0c0;
+  border-radius: 5px;
 }
 
 .textLayer {
@@ -21,12 +39,10 @@ li {
   position: absolute;
   border: 1.5px dashed rgb(164, 235, 71);
   display: inline-block;
-  font-family: "Black Han Sans", sans-serif;
   font-family: "Do Hyeon", sans-serif;
   background-color: transparent;
   word-wrap: break-word;
   word-break: break-all;
-  overflow: hidden;
   line-height: 1;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -34,21 +50,62 @@ li {
   user-select: none;
 }
 
-.axis {
-  display: inline-block;
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  background: rgb(164, 235, 71);
-}
-
 .paint__board {
   width: 500px;
   height: 500px;
-  box-shadow: 1px 1px 5px #c0c0c0, -1px 1px 5px #c0c0c0;
   border-radius: 5px;
 }
 
+.paint__toolB {
+  margin-top: 20px;
+}
+
+.paint__toolB input[type="range"] {
+  width: 400px;
+  -webkit-appearance: none;
+  vertical-align: super;
+  outline: none;
+  border: none;
+  padding: 0;
+  background: none;
+  margin-top: 10px;
+}
+
+.paint__toolB input[type="range"]::-webkit-slider-runnable-track {
+  background-color: #d7dbdd;
+  height: 6px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+}
+
+.paint__toolB input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  border-radius: 50%;
+  background-color: #666;
+  height: 18px;
+  width: 18px;
+  margin-top: -7px;
+}
+
+.paint__toolB input[type="range"]:hover::-webkit-slider-thumb {
+  background-color: rgb(255, 107, 157);
+}
+
+.paint__toolB label {
+  display: inline-block;
+  margin-left: 15px;
+  width: 80px;
+  border: 1px solid #dfdfdf;
+  text-align: center;
+  font-size: 25px;
+  font-weight: 800;
+  color: #222;
+  padding: 5px 15px;
+  margin-top: 10px;
+  box-sizing: border-box;
+}
+
+/* layout__top-right */
 .paint__toolA {
   float: right;
 }
@@ -215,56 +272,11 @@ li {
   color: #777;
 }
 
-.paint__toolB,
+/* layout__bottom */
 .paint__toolC {
   display: flex;
-  margin-top: 30px;
-  width: 500px;
-}
-
-.paint__toolB input[type="range"] {
-  width: 500px;
-  -webkit-appearance: none;
-  vertical-align: middle;
-  outline: none;
-  border: none;
-  padding: 0;
-  background: none;
-}
-
-.paint__toolB input[type="range"]::-webkit-slider-runnable-track {
-  background-color: #d7dbdd;
-  height: 6px;
-  border-radius: 3px;
-  border: 1px solid transparent;
-}
-
-.paint__toolB input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none !important;
-  border-radius: 50%;
-  background-color: #666;
-  height: 18px;
-  width: 18px;
-  margin-top: -7px;
-}
-
-.paint__toolB input[type="range"]:hover::-webkit-slider-thumb {
-  background-color: rgb(255, 107, 157);
-}
-
-.paint__toolB label {
-  margin-left: 38px;
-  width: 88px;
-  border: 1px solid #dfdfdf;
-  text-align: center;
-  font-size: 25px;
-  font-weight: 800;
-  color: #222;
-  padding: 10px 0;
-}
-
-.paint__toolC {
   position: relative;
+  margin-top: 30px;
 }
 
 .paint__toolC button {
