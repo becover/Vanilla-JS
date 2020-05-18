@@ -31,8 +31,17 @@ let dragStatus = {
     x: 0,
     y: 0,
   },
+  shiftX: 0,
+  shiftY: 0,
+  el: {
+    top: 0,
+    left: 0,
+    height: 0,
+    width: 0,
+  },
   rotation: 0,
-  active: false,
+  rotate: false,
+  move: false,
 };
 function initDragStatus() {
   dragStatus.startAngle = 0;
@@ -346,26 +355,15 @@ function addAttributes(el, x, y) {
     el.innerText = MANUAL;
     el.style.top = `${y}px`;
     el.style.left = `${x}px`;
-    // el.style.maxWidth = `${500 - x}px`;
-    // el.style.maxHeight = `${500 - x}px`;
     el.style.color = currentColor.style.backgroundColor;
     el.style.fontSize = `${+brushSize.value}px`;
     el.draggable = "true";
-    // el.contentEditable = isWriting;
-    // el.focus();
+    el.id = "draggable";
   }
-  // if (el.classList.contains("axis")) {
-  //   const width = getComputedStyleValue(".inputBox", "width");
-  //   const height = getComputedStyleValue(".inputBox", "height");
-  //   y > 20
-  //     ? (el.style.top = `${y - 30}px`)
-  //     : (el.style.top = `${+height + 30 + y}px`);
-  //   el.style.left = `${x + width / 2 - 5}px`;
-  // }
 }
 
 function getComputedStyleValue(el, style) {
-  const els = el || document.querySelector(el);
+  const els = document.querySelector(el);
   const result = window.getComputedStyle(els).getPropertyValue(style);
   return result;
 }
@@ -378,32 +376,12 @@ function createEl(el, name, parent) {
   return El;
 }
 
-// function getTextareaInfo(textarea) {
-//   const text = textarea.innerText;
-//   const color = getComputedStyleValue(textarea, "color");
-//   const size = getComputedStyleValue(textarea, "font-size");
-//   let top = getComputedStyleValue(textarea, "top").slice(0, -2);
-//   let left = getComputedStyleValue(textarea, "left").slice(0, -2);
-//   const height = getComputedStyleValue(textarea, "height").slice(0, -2);
-//   top = Number(top) + (Number(height) + 8) / 3;
-//   left = Number(left);
-//   return { text, color, size, top, left };
-// }
-
 function removeElement(...els) {
   console.log(els);
   els.forEach((el) => {
     el.remove();
   });
 }
-
-// function drawText(text, color, size, top, left) {
-//   console.log(text, color, size, top, left);
-//   ctx.textBaseline = "middle";
-//   ctx.font = `${size} "Do Hyeon"`;
-//   ctx.fillStyle = color;
-//   ctx.fillText(text, left + 1, top);
-// }
 
 function onChangeTextColor() {
   const textarea = document.querySelector(".inputBox");
@@ -423,21 +401,33 @@ function onChangeTextSize() {
 function dragStart(e) {
   e.preventDefault();
   const { top, left, height, width } = this.getBoundingClientRect();
+  // console.log("회전전", top, left, height, width);
+  // dragStatus.el.top = top;
+  // dragStatus.el.left = left;
+  // dragStatus.el.height = height;
+  // dragStatus.el.width = width;
+
   (dragStatus.center.x = left + width / 2),
     (dragStatus.center.y = top + height / 2);
-  const x = e.clientX - dragStatus.center.x;
-  const y = e.clientY - dragStatus.center.y;
-  dragStatus.startAngle = Math.round((180 / Math.PI) * Math.atan2(y, x));
-  // dragStatus.startAngle > 180
-  //   ? dragStatus.startAngle * 1
-  //   : dragStatus.startAngle * -1;
-  dragStatus.active = true;
-  console.log(">", dragStatus);
+  if (
+    Math.abs(dragStatus.center.x - e.clientX) <= 20 &&
+    Math.abs(dragStatus.center.y - e.clientY) <= 20
+  ) {
+    this.style.cursor = "move";
+    dragStatus.shiftX = e.clientX - left;
+    dragStatus.shiftY = e.clientY - top;
+    dragStatus.move = true;
+  } else {
+    const x = e.clientX - dragStatus.center.x;
+    const y = e.clientY - dragStatus.center.y;
+    dragStatus.startAngle = (180 / Math.PI) * Math.atan2(y, x);
+    dragStatus.rotate = true;
+  }
 }
 
 function dragRotate(e) {
   e.preventDefault();
-  if (dragStatus.active) {
+  if (dragStatus.rotate) {
     const x = e.clientX - dragStatus.center.x;
     const y = e.clientY - dragStatus.center.y;
     const degree = Math.round((180 / Math.PI) * Math.atan2(y, x));
@@ -445,14 +435,33 @@ function dragRotate(e) {
     this.style.transform = `rotate(${
       dragStatus.angle + dragStatus.rotation
     }deg)`;
-    console.log(dragStatus.startAngle, dragStatus.rotation);
-    console.log("<", dragStatus);
+    // const { top, left, height, width } = this.getBoundingClientRect();
+    // console.log("회전후", top, left, height, width);
+    // dragStatus.el.top = top - dragStatus.el.top;
+    // dragStatus.el.left = left - dragStatus.el.left;
+    // dragStatus.el.height = height - dragStatus.el.height;
+    // dragStatus.el.width = width - dragStatus.el.width;
+  }
+  if (dragStatus.move) {
+    // dragStatus.shiftX = e.clientX - dragStatus.el.left;
+    // dragStatus.shiftY = e.clientY - dragStatus.el.top;
+
+    const x = e.pageX - dragStatus.shiftX;
+    const y = e.pageY - dragStatus.shiftY;
+    this.style.top = `${y - canvas.getBoundingClientRect().top}px`;
+    this.style.left = `${x - canvas.getBoundingClientRect().left}px`;
   }
 }
 
 function dragStop() {
-  dragStatus.angle = dragStatus.angle + dragStatus.rotation;
-  return (dragStatus.active = false);
+  if (dragStatus.rotate) {
+    dragStatus.angle = Math.round(dragStatus.angle + dragStatus.rotation);
+    return (dragStatus.rotate = false);
+  }
+  if (dragStatus.move) {
+    this.style.cursor = "pointer";
+    return (dragStatus.move = false);
+  }
 }
 
 function handleFillText(x, y) {
