@@ -14,10 +14,13 @@ const redoButton = wrap.querySelector(".redo");
 const fillTextButton = wrap.querySelector(".fillText");
 const CLASS_PICK = "pick";
 
-const undoList = [];
-let redoList = [];
-let poppingLastIndex = true;
-let poppingAfterIndex = true;
+const canvasHistory = {
+  undoList: [],
+  redoList: [],
+  poppingLastIndex: true,
+  poppingAfterIndex: true,
+};
+
 const canvasStatus = {
   isPainting: false,
   isFilling: false,
@@ -26,12 +29,6 @@ const canvasStatus = {
   isWriting: false,
   lastUseBrushShape: brushsShape[0],
 };
-// let isPainting = false;
-// let isFilling = false;
-// let isPipetting = false;
-// let isPicking = false;
-// let isWriting = false;
-// let lastUseBrushShape = brushsShape[0];
 const dragStatus = {
   startAngle: 70,
   angle: 0,
@@ -98,15 +95,6 @@ const colors = [
   "#ff15ac",
 ];
 
-const eventPropagationChecker = {
-  getTargetTag: (target, tName) => {
-    while (target && target.tagNage !== tName) {
-      target = target.tagName !== "HTML" ? target.parentNode : false;
-    }
-    return target;
-  },
-};
-
 function getRgbaByImageData(imageData) {
   const [r, g, b, rawAlpha] = imageData.data;
   const a = rawAlpha / 255;
@@ -159,7 +147,7 @@ function wheelEventBindBrushSize(e) {
 }
 
 function stackCanvasHistory() {
-  undoList.push(canvas.toDataURL());
+  canvasHistory.undoList.push(canvas.toDataURL());
 }
 
 function bindDrawImage(beforeList, afterList) {
@@ -174,28 +162,28 @@ function bindDrawImage(beforeList, afterList) {
 }
 
 function handleRedoHistory() {
-  if (redoList.length <= 0) return false;
-  if (poppingAfterIndex) {
-    const tossToUndoList = redoList.pop();
-    undoList.push(tossToUndoList);
-    poppingAfterIndex = false;
+  if (canvasHistory.redoList.length <= 0) return false;
+  if (canvasHistory.poppingAfterIndex) {
+    const tossToUndoList = canvasHistory.redoList.pop();
+    canvasHistory.undoList.push(tossToUndoList);
+    canvasHistory.poppingAfterIndex = false;
   }
-  bindDrawImage(redoList, undoList);
+  bindDrawImage(canvasHistory.redoList, canvasHistory.undoList);
 }
 
 function handleUndoHistory() {
-  if (undoList.length <= 0) {
+  if (canvasHistory.undoList.length <= 0) {
     ctx.fillStyle = "#fff";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     return false;
   }
-  if (poppingLastIndex) {
-    const tossToRedoList = undoList.pop();
-    redoList.push(tossToRedoList);
-    poppingLastIndex = false;
+  if (canvasHistory.poppingLastIndex) {
+    const tossToRedoList = canvasHistory.undoList.pop();
+    canvasHistory.redoList.push(tossToRedoList);
+    canvasHistory.poppingLastIndex = false;
   }
-  bindDrawImage(undoList, redoList);
-  poppingAfterIndex = true;
+  bindDrawImage(canvasHistory.undoList, canvasHistory.redoList);
+  canvasHistory.poppingAfterIndex = true;
 }
 
 function handleLoadButton() {
