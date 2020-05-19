@@ -18,27 +18,29 @@ const undoList = [];
 let redoList = [];
 let poppingLastIndex = true;
 let poppingAfterIndex = true;
-let isPainting = false;
-let isFilling = false;
-let isPipetting = false;
-let isPicking = false;
-let isWriting = false;
-let lastUseBrushShape = brushsShape[0];
-let dragStatus = {
+const canvasStatus = {
+  isPainting: false,
+  isFilling: false,
+  isPipetting: false,
+  isPicking: false,
+  isWriting: false,
+  lastUseBrushShape: brushsShape[0],
+};
+// let isPainting = false;
+// let isFilling = false;
+// let isPipetting = false;
+// let isPicking = false;
+// let isWriting = false;
+// let lastUseBrushShape = brushsShape[0];
+const dragStatus = {
   startAngle: 70,
   angle: 0,
   center: {
     x: 0,
     y: 0,
   },
-  shiftX: 0,
-  shiftY: 0,
-  el: {
-    top: 0,
-    left: 0,
-    height: 0,
-    width: 0,
-  },
+  offsetX: 0,
+  offsetY: 0,
   rotation: 0,
   rotate: false,
   move: false,
@@ -120,7 +122,7 @@ function setColor2Canvas({ r, g, b, a }) {
   currentColor.style.backgroundColor = colorString;
   ctx.fillStyle = colorString;
   ctx.strokeStyle = colorString;
-  if (isWriting) {
+  if (canvasStatus.isWriting) {
     onChangeTextColor();
   }
 }
@@ -135,12 +137,12 @@ function pipetColor(ctx, x, y, e, width = 1, height = 1) {
 }
 
 function handlePipetteButton() {
-  isPipetting = true;
+  canvasStatus.isPipetting = true;
   canvas.style.cursor = "crosshair";
 }
 
 function stopPipetting() {
-  isPipetting = false;
+  canvasStatus.isPipetting = false;
   canvas.style.cursor = "default";
 }
 
@@ -222,23 +224,23 @@ function handleRightClick(e) {
 }
 
 function handleCanvasClick(e) {
-  isFilling && ctx.fillRect(0, 0, canvas.width, canvas.height);
-  isPipetting && pipetColor(ctx, e.offsetX, e.offsetY, e);
-  isWriting && handleFillText(e.offsetX, e.offsetY);
+  canvasStatus.isFilling && ctx.fillRect(0, 0, canvas.width, canvas.height);
+  canvasStatus.isPipetting && pipetColor(ctx, e.offsetX, e.offsetY, e);
+  canvasStatus.isWriting && handleFillText(e.offsetX, e.offsetY);
 }
 
 function handleModeButton() {
-  if (isFilling) {
-    isFilling = false;
+  if (canvasStatus.isFilling) {
+    canvasStatus.isFilling = false;
     modeButton.innerText = "Fill";
   } else {
-    isFilling = true;
+    canvasStatus.isFilling = true;
     modeButton.innerText = "Paint";
   }
 }
 
 function bindBrushSize() {
-  if (isWriting) {
+  if (canvasStatus.isWriting) {
     onChangeTextSize();
   }
   ctx.lineWidth = brushSize.value;
@@ -246,13 +248,13 @@ function bindBrushSize() {
 }
 
 function stopPainting() {
-  isPainting = false;
+  canvasStatus.isPainting = false;
 }
 
 function onMouseMove(e) {
   const x = e.offsetX;
   const y = e.offsetY;
-  if (!isPainting) {
+  if (!canvasStatus.isPainting) {
     ctx.beginPath();
     ctx.moveTo(x, y);
   } else {
@@ -262,8 +264,8 @@ function onMouseMove(e) {
 }
 
 function onMouseDown() {
-  if (isWriting) return false;
-  isPainting = true;
+  if (canvasStatus.isWriting) return false;
+  canvasStatus.isPainting = true;
 }
 
 function onMouseUp() {
@@ -289,8 +291,8 @@ function pickBindBrush() {
     shape.addEventListener("click", function (e) {
       brushsShape.forEach((shape) => shape.classList.remove(CLASS_PICK));
       lastUseBrushShape = e.currentTarget;
-      if (isWriting) {
-        isWriting = false;
+      if (canvasStatus.isWriting) {
+        canvasStatus.isWriting = false;
         fillTextButton.classList.remove(CLASS_PICK);
       }
       e.currentTarget.classList.add(CLASS_PICK);
@@ -304,7 +306,7 @@ function onChangeCurrentColor(e) {
   selectColor && (currentColor.style.backgroundColor = selectColor);
   ctx.strokeStyle = selectColor;
   ctx.fillStyle = selectColor;
-  if (isWriting) {
+  if (canvasStatus.isWriting) {
     onChangeTextColor();
   }
 }
@@ -401,21 +403,17 @@ function onChangeTextSize() {
 function dragStart(e) {
   e.preventDefault();
   const { top, left, height, width } = this.getBoundingClientRect();
-  // console.log("회전전", top, left, height, width);
-  // dragStatus.el.top = top;
-  // dragStatus.el.left = left;
-  // dragStatus.el.height = height;
-  // dragStatus.el.width = width;
 
-  (dragStatus.center.x = left + width / 2),
-    (dragStatus.center.y = top + height / 2);
+  dragStatus.offsetX = e.offsetX;
+  dragStatus.offsetY = e.offsetY;
+
+  dragStatus.center.x = left + width / 2;
+  dragStatus.center.y = top + height / 2;
   if (
     Math.abs(dragStatus.center.x - e.clientX) <= 20 &&
     Math.abs(dragStatus.center.y - e.clientY) <= 20
   ) {
     this.style.cursor = "move";
-    dragStatus.shiftX = e.clientX - left;
-    dragStatus.shiftY = e.clientY - top;
     dragStatus.move = true;
   } else {
     const x = e.clientX - dragStatus.center.x;
@@ -425,7 +423,7 @@ function dragStart(e) {
   }
 }
 
-function dragRotate(e) {
+function dragging(e) {
   e.preventDefault();
   if (dragStatus.rotate) {
     const x = e.clientX - dragStatus.center.x;
@@ -435,19 +433,11 @@ function dragRotate(e) {
     this.style.transform = `rotate(${
       dragStatus.angle + dragStatus.rotation
     }deg)`;
-    // const { top, left, height, width } = this.getBoundingClientRect();
-    // console.log("회전후", top, left, height, width);
-    // dragStatus.el.top = top - dragStatus.el.top;
-    // dragStatus.el.left = left - dragStatus.el.left;
-    // dragStatus.el.height = height - dragStatus.el.height;
-    // dragStatus.el.width = width - dragStatus.el.width;
   }
   if (dragStatus.move) {
-    // dragStatus.shiftX = e.clientX - dragStatus.el.left;
-    // dragStatus.shiftY = e.clientY - dragStatus.el.top;
+    const y = e.clientY - dragStatus.offsetY;
+    const x = e.clientX - dragStatus.offsetX;
 
-    const x = e.pageX - dragStatus.shiftX;
-    const y = e.pageY - dragStatus.shiftY;
     this.style.top = `${y - canvas.getBoundingClientRect().top}px`;
     this.style.left = `${x - canvas.getBoundingClientRect().left}px`;
   }
@@ -473,13 +463,14 @@ function handleFillText(x, y) {
         e.preventDefault();
         paintText2canvas(e);
         fillTextButton.classList.remove(CLASS_PICK);
-        lastUseBrushShape.classList.add(CLASS_PICK);
+        canvasStatus.lastUseBrushShape.classList.add(CLASS_PICK);
         initDragStatus();
+        canvasStatus.isWriting = false;
       }
     });
 
     textarea.addEventListener("dblclick", function () {
-      textarea.contentEditable = isWriting;
+      textarea.contentEditable = canvasStatus.isWriting;
       textarea.style.cursor = "text";
       textarea.focus();
     });
@@ -491,7 +482,7 @@ function handleFillText(x, y) {
       textarea.style.cursor = "pointer";
     });
     textarea.addEventListener("mousedown", dragStart, false);
-    textarea.addEventListener("mousemove", dragRotate, false);
+    textarea.addEventListener("mousemove", dragging, false);
     textarea.addEventListener("mouseup", dragStop, false);
     textarea.addEventListener("mouseleave", dragStop, false);
   }
@@ -535,7 +526,7 @@ function paintText2canvas(e) {
 }
 
 function handleFillTextButton(e) {
-  isWriting = true;
+  canvasStatus.isWriting = true;
   e.target.classList.add(CLASS_PICK);
   brushsShape.forEach((shape) => shape.classList.remove(CLASS_PICK));
 }
