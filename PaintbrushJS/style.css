@@ -136,16 +136,26 @@ li {
   width: 40px;
   height: 40px;
   margin: 4px;
-  box-shadow: -0.5px 0.5px 0.8px #c4cbd4, 0.5px 1px 1px #c4cbd4,
-    0px 3px 1px #c4cbd4;
-  border-radius: 3px;
+  /* box-shadow: -0.5px 0.5px 0.8px #c4cbd4, 0.5px 1px 1px #c4cbd4,
+    0px 3px 1px #c4cbd4; */
+  /* border-radius: 3px; */
   border: 0.8px solid #c0c0c0;
   box-sizing: border-box;
+  position: relative;
 }
 
-.paint__palette .paint__palette-color.pick {
+.paint__palette .paint__palette-color.pick:after {
   transition: all 0.2s ease-in;
-  box-shadow: none !important;
+  /* box-shadow: none !important; */
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 3px solid #c0c0c0;
+  box-sizing: border-box;
 }
 
 .paint__customPalett .pipette {
@@ -212,8 +222,7 @@ li {
 }
 
 .paint__brush li.pick,
-.paint__history li:hover,
-.paint__text li.pick {
+.paint__history li:hover {
   border: 1px solid rgb(255, 107, 157);
   color: #333;
 }
@@ -261,7 +270,8 @@ li {
   color: #777;
 }
 
-.paint__text li {
+.paint__text .fillText,
+.paint__text .borderText {
   float: left;
   width: calc(33.33% -8px);
   font-size: 13px;
@@ -270,6 +280,32 @@ li {
   padding: 4px 8.5px;
   box-sizing: border-box;
   color: #777;
+}
+
+.paint__text .fillText {
+  font-weight: 600;
+  text-shadow: 1px 1px 0 #777, -1px 1px 0 #777, -1px -1px 0 #777,
+    1px -1px 0 #777, -1px 0 0 #777, 0 -1px 0 #777, 1px 0 0 #777, 0 1px 0 #777;
+}
+.paint__text .borderText {
+  font-weight: 600;
+  color: white;
+  text-shadow: 1px 1px 0 #777, -1px 1px 0 #777, -1px -1px 0 #777,
+    1px -1px 0 #777, -1px 0 0 #777, 0 -1px 0 #777, 1px 0 0 #777, 0 1px 0 #777;
+}
+
+.paint__text .fillText.pick {
+  border: 1px solid rgb(255, 107, 157);
+  color: #333;
+  text-shadow: 1px 1px 0 #333, -1px 1px 0 #333, -1px -1px 0 #333,
+    1px -1px 0 #333, -1px 0 0 #333, 0 -1px 0 #333, 1px 0 0 #333, 0 1px 0 #333;
+}
+
+.paint__text .borderText.pick {
+  border: 1px solid rgb(255, 107, 157);
+  color: #fff;
+  text-shadow: 1px 1px 0 #333, -1px 1px 0 #333, -1px -1px 0 #333,
+    1px -1px 0 #333, -1px 0 0 #333, 0 -1px 0 #333, 1px 0 0 #333, 0 1px 0 #333;
 }
 
 /* layout__bottom */
