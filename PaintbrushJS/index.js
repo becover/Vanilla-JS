@@ -22,6 +22,8 @@ function onMouseMove(e) {
     ctx.beginPath();
     ctx.moveTo(x, y);
   } else {
+    ctx.strokeStyle = canvasStatus.color;
+    ctx.fillStyle = canvasStatus.color;
     ctx.lineTo(x, y);
     ctx.stroke();
   }
@@ -41,9 +43,9 @@ function onMouseUp() {
 
 function onChangeCurrentColor(e) {
   const selectColor = e.target.style.backgroundColor;
+  console.log(selectColor);
   selectColor && (currentColor.style.backgroundColor = selectColor);
-  ctx.strokeStyle = selectColor;
-  ctx.fillStyle = selectColor;
+  canvasStatus.color = selectColor;
   if (canvasStatus.isWriting) {
     onChangeTextColor();
   }

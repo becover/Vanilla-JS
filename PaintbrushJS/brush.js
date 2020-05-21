@@ -17,7 +17,23 @@ function bindBrushSize() {
     onChangeTextSize();
   }
   ctx.lineWidth = brushSize.value;
-  wrap.querySelector(".paint__toolB label").innerText = brushSize.value;
+  $qSelectorAll(wrap, ".paint__toolB label")[0].innerText = brushSize.value;
+}
+
+function handleAlphaValue() {
+  $qSelectorAll(wrap, ".paint__toolB label")[1].innerText = alphaRange.value;
+
+  const rgbString = window
+    .getComputedStyle(currentColor)
+    .getPropertyValue("background-color")
+    .split("(")[1]
+    .split(")")[0]
+    .split(",");
+  const [r, g, b] = rgbString;
+  const a = this.value / 100;
+  const rgbaString = buildRgbaString({ r, g, b, a });
+  console.log(rgbaString);
+  canvasStatus.color = rgbaString;
 }
 
 function pickBindBrush() {
@@ -39,3 +55,4 @@ pickBindBrush();
 
 brushSize.addEventListener("input", bindBrushSize);
 brushSize.addEventListener("wheel", wheelEventBindBrushSize);
+alphaRange.addEventListener("input", handleAlphaValue);
