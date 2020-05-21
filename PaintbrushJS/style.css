@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap");
 li {
   cursor: pointer;
 }
@@ -6,14 +8,104 @@ li {
   margin: 100px auto;
   width: 630px;
 }
+/* layout__top */
+.layout__top:after {
+  content: "";
+  display: block;
+  clear: both;
+}
 
-.paint__board {
-  width: 500px;
-  height: 500px;
+.layout__top .layout__top-left {
+  float: left;
+}
+.layout__top .layout__top-right {
+  float: right;
+}
+
+/* layout__top-left */
+.paint__boardWrap {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
   box-shadow: 1px 1px 5px #c0c0c0, -1px 1px 5px #c0c0c0;
   border-radius: 5px;
 }
 
+.textLayer {
+  position: absolute !important;
+}
+
+.inputBox {
+  position: absolute;
+  border: 1.5px dashed rgb(164, 235, 71);
+  display: inline-block;
+  font-family: "Do Hyeon", sans-serif;
+  background-color: transparent;
+  word-wrap: break-word;
+  word-break: break-all;
+  line-height: 1;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.paint__board {
+  width: 500px;
+  height: 500px;
+  border-radius: 5px;
+}
+
+.paint__toolB {
+  margin-top: 20px;
+}
+
+.paint__toolB input[type="range"] {
+  width: 400px;
+  -webkit-appearance: none;
+  vertical-align: super;
+  outline: none;
+  border: none;
+  padding: 0;
+  background: none;
+  margin-top: 10px;
+}
+
+.paint__toolB input[type="range"]::-webkit-slider-runnable-track {
+  background-color: #d7dbdd;
+  height: 6px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+}
+
+.paint__toolB input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  border-radius: 50%;
+  background-color: #666;
+  height: 18px;
+  width: 18px;
+  margin-top: -7px;
+}
+
+.paint__toolB input[type="range"]:hover::-webkit-slider-thumb {
+  background-color: rgb(255, 107, 157);
+}
+
+.paint__toolB label {
+  display: inline-block;
+  margin-left: 15px;
+  width: 80px;
+  border: 1px solid #dfdfdf;
+  text-align: center;
+  font-size: 25px;
+  font-weight: 800;
+  color: #222;
+  padding: 5px 15px;
+  margin-top: 10px;
+  box-sizing: border-box;
+}
+
+/* layout__top-right */
 .paint__toolA {
   float: right;
 }
@@ -25,7 +117,8 @@ li {
 .paint__brush:after,
 .paint__palette:after,
 .paint__customPalett:after,
-.paint__customPalett .colorPicker:after {
+.paint__customPalett .colorPicker:after,
+.paint__history:after {
   content: "";
   display: block;
   clear: both;
@@ -43,17 +136,26 @@ li {
   width: 40px;
   height: 40px;
   margin: 4px;
-  box-shadow: -0.5px 0.5px 0.8px #c4cbd4, 0.5px 1px 1px #c4cbd4,
-    0px 3px 1px #c4cbd4;
-  border-radius: 3px;
+  /* box-shadow: -0.5px 0.5px 0.8px #c4cbd4, 0.5px 1px 1px #c4cbd4,
+    0px 3px 1px #c4cbd4; */
+  /* border-radius: 3px; */
   border: 0.8px solid #c0c0c0;
   box-sizing: border-box;
+  position: relative;
 }
 
-.paint__palette .paint__palette-color.pick {
-  -webkit-transition: all 0.2s ease-in;
+.paint__palette .paint__palette-color.pick:after {
   transition: all 0.2s ease-in;
-  box-shadow: none !important;
+  /* box-shadow: none !important; */
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 3px solid #c0c0c0;
+  box-sizing: border-box;
 }
 
 .paint__customPalett .pipette {
@@ -79,18 +181,6 @@ li {
 }
 .paint__customPalett .colorPicker {
   position: relative;
-  background: -webkit-gradient(
-    linear,
-    left top, right top,
-    from(#ff0000),
-    color-stop(#ff9100),
-    color-stop(#ffe600),
-    color-stop(#91ff00),
-    color-stop(#00c3ff),
-    color-stop(#006eff),
-    color-stop(#9900ff),
-    to(#ff00ff)
-  );
   background: linear-gradient(
     to right,
     #ff0000,
@@ -117,7 +207,8 @@ li {
 }
 
 .paint__brush li,
-.paint__history li {
+.paint__history li,
+.paint__text li {
   padding: 5px;
   margin: 8px 4px;
   text-align: center;
@@ -162,9 +253,7 @@ li {
 
 .paint__brush li span.butt {
   height: 1px;
-  -webkit-transform-origin: right;
   transform-origin: right;
-  -webkit-transform: rotate(45deg);
   transform: rotate(45deg);
 }
 
@@ -181,61 +270,52 @@ li {
   color: #777;
 }
 
-.paint__toolB,
+.paint__text .fillText,
+.paint__text .borderText {
+  float: left;
+  width: calc(33.33% -8px);
+  font-size: 13px;
+  margin: 0;
+  margin: 8px 4px;
+  padding: 4px 8.5px;
+  box-sizing: border-box;
+  color: #777;
+}
+
+.paint__text .fillText {
+  font-weight: 600;
+  text-shadow: 1px 1px 0 #777, -1px 1px 0 #777, -1px -1px 0 #777,
+    1px -1px 0 #777, -1px 0 0 #777, 0 -1px 0 #777, 1px 0 0 #777, 0 1px 0 #777;
+}
+.paint__text .borderText {
+  font-weight: 600;
+  color: white;
+  text-shadow: 1px 1px 0 #777, -1px 1px 0 #777, -1px -1px 0 #777,
+    1px -1px 0 #777, -1px 0 0 #777, 0 -1px 0 #777, 1px 0 0 #777, 0 1px 0 #777;
+}
+
+.paint__text .fillText.pick {
+  border: 1px solid rgb(255, 107, 157);
+  color: #333;
+  text-shadow: 1px 1px 0 #333, -1px 1px 0 #333, -1px -1px 0 #333,
+    1px -1px 0 #333, -1px 0 0 #333, 0 -1px 0 #333, 1px 0 0 #333, 0 1px 0 #333;
+}
+
+.paint__text .borderText.pick {
+  border: 1px solid rgb(255, 107, 157);
+  color: #fff;
+  text-shadow: 1px 1px 0 #333, -1px 1px 0 #333, -1px -1px 0 #333,
+    1px -1px 0 #333, -1px 0 0 #333, 0 -1px 0 #333, 1px 0 0 #333, 0 1px 0 #333;
+}
+
+/* layout__bottom */
 .paint__toolC {
-  display: -webkit-box;
   display: flex;
-  margin-top: 30px;
-  width: 500px;
-}
-
-.paint__toolB input[type="range"] {
-  width: 500px;
-  -webkit-appearance: none;
-  vertical-align: middle;
-  outline: none;
-  border: none;
-  padding: 0;
-  background: none;
-}
-
-.paint__toolB input[type="range"]::-webkit-slider-runnable-track {
-  background-color: #d7dbdd;
-  height: 6px;
-  border-radius: 3px;
-  border: 1px solid transparent;
-}
-
-.paint__toolB input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none !important;
-  border-radius: 50%;
-  background-color: #666;
-  height: 18px;
-  width: 18px;
-  margin-top: -7px;
-}
-
-.paint__toolB input[type="range"]:hover::-webkit-slider-thumb {
-  background-color: rgb(255, 107, 157);
-}
-
-.paint__toolB label {
-  margin-left: 38px;
-  width: 88px;
-  border: 1px solid #dfdfdf;
-  text-align: center;
-  font-size: 25px;
-  font-weight: 800;
-  color: #222;
-  padding: 10px 0;
-}
-
-.paint__toolC {
   position: relative;
+  margin-top: 30px;
 }
 
 .paint__toolC button {
-  -webkit-box-flex: 1;
   flex: 1;
   margin: 0 10px;
   padding: 5px;

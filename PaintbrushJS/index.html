@@ -12,47 +12,84 @@
 
 <body>
   <div id="wrap">
-    <canvas class="paint__board"></canvas>
-    <div class="paint__toolA">
-      <div class="paint__palette-currentColor"></div>
-      <ul class="paint__palette"></ul>
-      <ul class="paint__customPalett">
-        <li class="pipette"><i class="fas fa-eye-dropper"></i></li>
-        <li class="colorPicker">
-          <canvas class="color__board"></canvas>
-        </li>
-      </ul>
-      <ul class="paint__brush">
-        <li class="pick">
-          <h3>butt</h3>
-          <span class="butt"></span>
-        </li>
-        <li>
-          <h3>square</h3>
-          <span class="square"></span>
-        </li>
-        <li>
-          <h3>round</h3>
-          <span class="round"></span>
-        </li>
-      </ul>
-      <ul class="paint__history">
-        <li class="undo">undo</li>
-        <li class="redo">redo</li>
-      </ul>
-      <span class="paint__toolA-handle"></span>
+
+    <div class="layout__top">
+
+      <div class="layout__top-left">
+        <div class="paint__boardWrap">
+          <canvas class="paint__board"></canvas>
+        </div>
+
+        <div class="paint__toolB">
+          <div>
+            <input type="range" value="25" min='0.1' max='50' step='0.1' id="paint__brush-size" />
+            <label for="paint__brush-size">25</label>
+          </div>
+          <div>
+            <input type="range" value="100" min='1' max='100' step='1' id="paint__color-alpha" />
+            <label for="paint__color-alpha">100</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="layout__top-right">
+        <div class="paint__toolA">
+          <div class="paint__palette-currentColor"></div>
+          <ul class="paint__palette"></ul>
+          <ul class="paint__customPalett">
+            <li class="pipette"><i class="fas fa-eye-dropper"></i></li>
+            <li class="colorPicker">
+              <canvas class="color__board"></canvas>
+            </li>
+          </ul>
+          <ul class="paint__brush">
+            <li class="pick">
+              <h3>butt</h3>
+              <span class="butt"></span>
+            </li>
+            <li>
+              <h3>square</h3>
+              <span class="square"></span>
+            </li>
+            <li>
+              <h3>round</h3>
+              <span class="round"></span>
+            </li>
+          </ul>
+          <ul class="paint__history">
+            <li class="undo">undo</li>
+            <li class="redo">redo</li>
+          </ul>
+          <ul class="paint__text">
+            <li class="fillText" data-textMode="fill">T</li>
+            <li class="borderText" data-textMode="border">T</li>
+          </ul>
+          <span class="paint__toolA-handle"></span>
+        </div>
+      </div>
+
     </div>
-    <div class="paint__toolB">
-      <input type="range" value="5" min='0.1' max='50' step='0.1' id="paint__brush-size" />
-      <label for="paint__brush-size">5</label>
+
+    <div class="layout__bottom">
+
+      <div class="paint__toolC">
+        <button class="fill">Fill</button>
+        <button class="save">Save</button>
+        <input type="file" name="img" size='65' class="load" />
+        <button>load</button>
+      </div>
+
     </div>
-    <div class="paint__toolC">
-      <button class="fill">Fill</button>
-      <button class="save">Save</button>
-      <input type="file" name="img" size='65' class="load" />
-      <button>load</button>
-    </div>
+    <script src="./utils.js"></script>
+    <script src="./status.js"></script>
+    <script src="./fontFace.js"></script>
+    <script src="./undoredo.js"></script>
     <script src="./index.js"></script>
+    <script src="./pipette.js"></script>
+    <script src="./picker.js"></script>
+    <script src="./brush.js"></script>
+    <script src="./text.js"></script>
+    <script src="./modeBtns.js"></script>
   </div>
 </body>
 
