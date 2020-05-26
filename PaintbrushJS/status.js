@@ -10,12 +10,14 @@ const canvasStatus = {
   height: 500,
   color: "#333",
   lineWidth: 25,
+  lineCap: "butt",
   isPainting: false,
   isFilling: false,
   isPipetting: false,
   isPicking: false,
   isWriting: false,
-  lastUseBrushShape: null,
+  // lastUseBrushShape: null,
+  mode: "brush",
 };
 const dragStatus = {
   startAngle: 0,

@@ -31,8 +31,14 @@ li {
   border-radius: 5px;
 }
 
-.textLayer {
-  position: absolute !important;
+.paint__board {
+  margin-bottom: -4px;
+}
+
+.alphaLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .inputBox {

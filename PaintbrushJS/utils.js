@@ -16,4 +16,5 @@ const textButton = $qSelectorAll(wrap, ".paint__text li");
 const undoButton = $qSelector(wrap, ".undo");
 const redoButton = $qSelector(wrap, ".redo");
 const alphaRange = $id("paint__color-alpha");
+const canvasWrap = $qSelector(wrap, ".paint__boardWrap");
 const CLASS_PICK = "pick";

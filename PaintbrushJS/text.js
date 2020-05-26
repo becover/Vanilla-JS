@@ -37,14 +37,8 @@ function paintText2canvas(e) {
   img.onload = function () {
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
   };
-  removeElement(e.target);
+  removeEl(e.target);
   stackCanvasHistory();
-}
-
-function removeElement(...els) {
-  els.forEach((el) => {
-    el.remove();
-  });
 }
 
 function onChangeTextColor() {
@@ -201,6 +195,7 @@ function handleTextButton(e) {
     button.classList.remove(CLASS_PICK)
   );
   e.target.classList.add(CLASS_PICK);
+  canvasStatus.mode = "text";
   brushsShape.forEach((shape) => shape.classList.remove(CLASS_PICK));
 }
 

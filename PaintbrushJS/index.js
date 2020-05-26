@@ -22,8 +22,8 @@ function onMouseMove(e) {
     ctx.beginPath();
     ctx.moveTo(x, y);
   } else {
-    ctx.strokeStyle = canvasStatus.color;
     ctx.fillStyle = canvasStatus.color;
+    ctx.strokeStyle = canvasStatus.color;
     ctx.lineTo(x, y);
     ctx.stroke();
   }
@@ -46,6 +46,7 @@ function onChangeCurrentColor(e) {
   console.log(selectColor);
   selectColor && (currentColor.style.backgroundColor = selectColor);
   canvasStatus.color = selectColor;
+  ctx.fillStyle = canvasStatus.color;
   if (canvasStatus.isWriting) {
     onChangeTextColor();
   }
@@ -117,11 +118,17 @@ function onToggleClassPick(e, clickEl) {
 }
 
 function createEl(el, name, parent) {
-  const parentEl = parent && document.querySelector(parent);
+  const parentEl = parent || document.querySelector(parent);
   const El = document.createElement(el);
   El.classList.add(name);
   parentEl.appendChild(El);
   return El;
+}
+
+function removeEl(...els) {
+  els.forEach((el) => {
+    el.remove();
+  });
 }
 
 function init() {
