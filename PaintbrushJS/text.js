@@ -36,9 +36,9 @@ function paintText2canvas(e) {
   img.src = "data:image/svg+xml," + encodeURIComponent(xml);
   img.onload = function () {
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    removeEl(e.target);
+    stackCanvasHistory();
   };
-  removeEl(e.target);
-  stackCanvasHistory();
 }
 
 function onChangeTextColor() {
@@ -55,14 +55,14 @@ function onChangeTextSize() {
     textarea.style.height = `${+brushSize.value}px`;
   } else if (textarea !== null && textStatus.mode === "border") {
     textarea.style.textShadow = `
-    1px 1px ${brushSize.value}px ${currentColor.style.backgroundColor},
-    -1px 1px ${brushSize.value}px ${currentColor.style.backgroundColor},
-    -1px -1px ${brushSize.value}px ${currentColor.style.backgroundColor},
-    1px -1px ${brushSize.value}px ${currentColor.style.backgroundColor},
-    -1px 0 ${brushSize.value}px ${currentColor.style.backgroundColor},
-    0 -1px ${brushSize.value}px ${currentColor.style.backgroundColor},
-    1px 0 ${brushSize.value}px ${currentColor.style.backgroundColor},
-    0 1px ${brushSize.value}px ${currentColor.style.backgroundColor}`;
+    1px 1px ${brushSize.value}px ${canvasStatus.color},
+    -1px 1px ${brushSize.value}px ${canvasStatus.color},
+    -1px -1px ${brushSize.value}px ${canvasStatus.color},
+    1px -1px ${brushSize.value}px ${canvasStatus.color},
+    -1px 0 ${brushSize.value}px ${canvasStatus.color},
+    0 -1px ${brushSize.value}px ${canvasStatus.color},
+    1px 0 ${brushSize.value}px ${canvasStatus.color},
+    0 1px ${brushSize.value}px ${canvasStatus.color}`;
   }
 }
 
@@ -133,19 +133,20 @@ function addAttributes(el, x, y) {
 }
 
 function handleStyle(el) {
+  handleAlphaValue();
   if (textStatus.mode === "fill") {
-    el.style.color = currentColor.style.backgroundColor;
+    el.style.color = canvasStatus.color;
   }
   if (textStatus.mode === "border") {
     el.style.textShadow = `
-    1px 1px ${brushSize.value}px ${currentColor.style.backgroundColor},
-    -1px 1px ${brushSize.value}px ${currentColor.style.backgroundColor},
-    -1px -1px ${brushSize.value}px ${currentColor.style.backgroundColor},
-    1px -1px ${brushSize.value}px ${currentColor.style.backgroundColor},
-    -1px 0 ${brushSize.value}px ${currentColor.style.backgroundColor},
-    0 -1px ${brushSize.value}px ${currentColor.style.backgroundColor},
-    1px 0 ${brushSize.value}px ${currentColor.style.backgroundColor},
-    0 1px ${brushSize.value}px ${currentColor.style.backgroundColor}`;
+    1px 1px ${brushSize.value}px ${canvasStatus.color},
+    -1px 1px ${brushSize.value}px ${canvasStatus.color},
+    -1px -1px ${brushSize.value}px ${canvasStatus.color},
+    1px -1px ${brushSize.value}px ${canvasStatus.color},
+    -1px 0 ${brushSize.value}px ${canvasStatus.color},
+    0 -1px ${brushSize.value}px ${canvasStatus.color},
+    1px 0 ${brushSize.value}px ${canvasStatus.color},
+    0 1px ${brushSize.value}px ${canvasStatus.color}`;
   }
 }
 
@@ -163,6 +164,7 @@ function handleFillText(x, y) {
         canvasStatus.lastUseBrushShape.classList.add(CLASS_PICK);
         initDragStatus();
         changeToFlagStatus(canvasStatus, "isWriting", false);
+        changeToFlagStatus(canvasStatus, "mode", "brush");
       }
     });
 

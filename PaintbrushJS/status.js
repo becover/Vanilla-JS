@@ -16,7 +16,6 @@ const canvasStatus = {
   isPipetting: false,
   isPicking: false,
   isWriting: false,
-  // lastUseBrushShape: null,
   mode: "brush",
 };
 const dragStatus = {
