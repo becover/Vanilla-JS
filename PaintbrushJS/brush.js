@@ -41,7 +41,15 @@ function pickBindBrush() {
       }
       e.currentTarget.classList.add(CLASS_PICK);
       canvasStatus.lineCap = e.currentTarget.childNodes[1].innerText;
-      layerCtx && (layerCtx.lineCap = canvasStatus.lineCap);
+      if (canvasStatus.lineCap === "round") {
+        canvasStatus.lineJoin = "round";
+      } else if (canvasStatus.lineCap === "square") {
+        canvasStatus.lineJoin = "miter";
+      } else {
+        canvasStatus.lineJoin = "bevel";
+      }
+      layerCtx.lineCap = canvasStatus.lineCap;
+      layerCtx.lineJoin = canvasStatus.lineJoin;
       ctx.lineCap = canvasStatus.lineCap;
     })
   );

@@ -11,12 +11,21 @@ const canvasStatus = {
   color: "#333",
   lineWidth: 25,
   lineCap: "butt",
+  lineJoin: "bevel",
   isPainting: false,
   isFilling: false,
   isPipetting: false,
   isPicking: false,
   isWriting: false,
+  isDrawingShapes: false,
   mode: "brush",
+  shapes: {
+    type: null,
+    location: {
+      start: {},
+      end: {},
+    },
+  },
 };
 const dragStatus = {
   startAngle: 0,
