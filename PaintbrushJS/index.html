@@ -18,6 +18,7 @@
       <div class="layout__top-left">
         <div class="paint__boardWrap">
           <canvas class="paint__board"></canvas>
+          <canvas class="paint__layer" style="opacity: 1;"></canvas>
         </div>
 
         <div class="paint__toolB">
@@ -56,13 +57,22 @@
               <span class="round"></span>
             </li>
           </ul>
+          <ul class="paint__text">
+            <li class="fillText" data-textMode="fill">Text</li>
+            <li class="borderText" data-textMode="border">Text</li>
+          </ul>
+          <ul class="paint__shapes">
+            <li class="rectangle"><span class="rectangle__shape"></span></li>
+            <li class="triangle"><span class="triangle__shape">
+                <svg height="13" width="13">
+                  <polygon points="0,13 6.5,0 13,13" style="fill:none;stroke:rgb(134, 133, 133);stroke-width:0.9"
+                    stroke-dasharray="2,2" />
+                </svg></span></li>
+            <li class="circle"><span class="circle__shape"></span></li>
+          </ul>
           <ul class="paint__history">
             <li class="undo">undo</li>
             <li class="redo">redo</li>
-          </ul>
-          <ul class="paint__text">
-            <li class="fillText" data-textMode="fill">T</li>
-            <li class="borderText" data-textMode="border">T</li>
           </ul>
           <span class="paint__toolA-handle"></span>
         </div>
@@ -80,17 +90,18 @@
       </div>
 
     </div>
-    <script src="./utils.js"></script>
-    <script src="./status.js"></script>
-    <script src="./fontFace.js"></script>
-    <script src="./undoredo.js"></script>
-    <script src="./index.js"></script>
-    <script src="./pipette.js"></script>
-    <script src="./picker.js"></script>
-    <script src="./brush.js"></script>
-    <script src="./text.js"></script>
-    <script src="./modeBtns.js"></script>
   </div>
+  <script src="./utils.js"></script>
+  <script src="./status.js"></script>
+  <script src="./fontFace.js"></script>
+  <script src="./undoredo.js"></script>
+  <script src="./index.js"></script>
+  <script src="./pipette.js"></script>
+  <script src="./picker.js"></script>
+  <script src="./brush.js"></script>
+  <script src="./text.js"></script>
+  <script src="./modeBtns.js"></script>
+  <script src="./shapes.js"></script>
 </body>
 
 </html>

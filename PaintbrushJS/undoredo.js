@@ -5,8 +5,8 @@ function bindDrawImage(beforeList, afterList) {
   img.src = src;
   img.onload = function () {
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    afterList.push(LastHistoryIndex);
   };
-  afterList.push(LastHistoryIndex);
 }
 
 function handleRedoHistory() {
@@ -22,13 +22,23 @@ function handleRedoHistory() {
 function handleUndoHistory() {
   if (canvasHistory.undoList.length <= 0) {
     ctx.fillStyle = "#fff";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvasStatus.width, canvasStatus.height);
+    // console.log(canvasHistory.undoList, canvasHistory.undoList.length);
     return false;
   }
+
   if (canvasHistory.poppingLastIndex) {
     const tossToRedoList = canvasHistory.undoList.pop();
-    canvasHistory.redoList.push(tossToRedoList);
+
+    const img = new Image();
+    const src = tossToRedoList;
+    img.src = src;
+    img.onload = function () {
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      canvasHistory.redoList.push(tossToRedoList);
+    };
     changeToFlagStatus(canvasHistory, "poppingLastIndex", false);
+    ctx.clearRect(0, 0, canvasStatus.width, canvasStatus.height);
   }
   bindDrawImage(canvasHistory.undoList, canvasHistory.redoList);
   changeToFlagStatus(canvasHistory, "poppingAfterIndex", true);

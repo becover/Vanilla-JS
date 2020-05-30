@@ -10,12 +10,22 @@ const canvasStatus = {
   height: 500,
   color: "#333",
   lineWidth: 25,
+  lineCap: "butt",
+  lineJoin: "bevel",
   isPainting: false,
   isFilling: false,
   isPipetting: false,
   isPicking: false,
   isWriting: false,
-  lastUseBrushShape: null,
+  isDrawingShapes: false,
+  mode: "brush",
+  shapes: {
+    type: null,
+    location: {
+      start: {},
+      end: {},
+    },
+  },
 };
 const dragStatus = {
   startAngle: 0,

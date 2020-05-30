@@ -13,7 +13,14 @@ const colorPickerButton = $qSelector(wrap, ".colorPicker");
 const brushsShape = $qSelectorAll(wrap, ".paint__brush li");
 const brushSize = $id("paint__brush-size");
 const textButton = $qSelectorAll(wrap, ".paint__text li");
+const shapesButton = $qSelectorAll(wrap, ".paint__shapes li");
 const undoButton = $qSelector(wrap, ".undo");
 const redoButton = $qSelector(wrap, ".redo");
 const alphaRange = $id("paint__color-alpha");
+const canvasWrap = $qSelector(wrap, ".paint__boardWrap");
+const canvas = $qSelector(wrap, ".paint__board");
+const ctx = canvas.getContext("2d");
+const layer = $qSelector(wrap, ".paint__layer");
+const layerCtx = layer.getContext("2d");
+
 const CLASS_PICK = "pick";

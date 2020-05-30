@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap");
 li {
   cursor: pointer;
@@ -31,8 +30,14 @@ li {
   border-radius: 5px;
 }
 
-.textLayer {
-  position: absolute !important;
+.paint__board {
+  margin-bottom: -4px;
+}
+
+.paint__layer {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .inputBox {
@@ -108,6 +113,8 @@ li {
 /* layout__top-right */
 .paint__toolA {
   float: right;
+  width: 88px;
+  margin-right: 10px;
 }
 
 .paint__palette {
@@ -118,7 +125,8 @@ li {
 .paint__palette:after,
 .paint__customPalett:after,
 .paint__customPalett .colorPicker:after,
-.paint__history:after {
+.paint__history:after,
+.paint__text:after {
   content: "";
   display: block;
   clear: both;
@@ -128,26 +136,31 @@ li {
   width: 88px;
   height: 88px;
   background: #333;
-  margin: 4px;
+  margin: 4px 0;
   border: 1px solid #dbdbdb;
 }
 .paint__palette .paint__palette-color {
   float: left;
   width: 40px;
   height: 40px;
-  margin: 4px;
-  /* box-shadow: -0.5px 0.5px 0.8px #c4cbd4, 0.5px 1px 1px #c4cbd4,
-    0px 3px 1px #c4cbd4; */
-  /* border-radius: 3px; */
+  margin: 4px 0;
+  box-shadow: -0.5px 0.5px 0.8px #c4cbd4, 0.5px 1px 1px #c4cbd4,
+    0px 3px 1px #c4cbd4;
+  border-radius: 3px;
   border: 0.8px solid #c0c0c0;
   box-sizing: border-box;
   position: relative;
 }
 
-.paint__palette .paint__palette-color.pick:after {
+.paint__palette .paint__palette-color:nth-of-type(2n-1),
+.paint__customPalett .pipette {
+  margin-right: 8px;
+}
+
+.paint__palette .paint__palette-color.pick {
   transition: all 0.2s ease-in;
-  /* box-shadow: none !important; */
-  content: "";
+  box-shadow: none !important;
+  /* content: "";
   display: inline-block;
   position: absolute;
   top: 0;
@@ -155,7 +168,7 @@ li {
   width: 100%;
   height: 100%;
   border: 3px solid #c0c0c0;
-  box-sizing: border-box;
+  box-sizing: border-box; */
 }
 
 .paint__customPalett .pipette {
@@ -169,7 +182,7 @@ li {
   float: left;
   width: 40px;
   height: 40px;
-  margin: 4px;
+  margin: 4px 0;
   border: 1px solid #dfdfdf;
   box-sizing: border-box;
 }
@@ -208,11 +221,14 @@ li {
 
 .paint__brush li,
 .paint__history li,
-.paint__text li {
+.paint__text li,
+.paint__shapes li {
   padding: 5px;
-  margin: 8px 4px;
+  margin: 6px 0;
   text-align: center;
   border: 1px solid #dfdfdf;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .paint__history li:after {
@@ -222,7 +238,9 @@ li {
 }
 
 .paint__brush li.pick,
-.paint__history li:hover {
+.paint__history li:hover,
+.paint__shapes li:hover,
+.paint__shapes li.pick {
   border: 1px solid rgb(255, 107, 157);
   color: #333;
 }
@@ -266,26 +284,57 @@ li {
   width: calc(50% -8px);
   font-size: 13px;
   margin: 0;
-  margin: 2px 4px;
+  margin: 2px 0;
   color: #777;
 }
 
 .paint__text .fillText,
 .paint__text .borderText {
   float: left;
-  width: calc(33.33% -8px);
+  width: calc(50% - 4px);
   font-size: 13px;
   margin: 0;
-  margin: 8px 4px;
-  padding: 4px 8.5px;
+  margin: 4px 0;
+  padding: 4px 4px;
   box-sizing: border-box;
   color: #777;
 }
 
+.paint__shapes li {
+  float: left;
+  width: calc(33.33% - 4px);
+  height: 27px;
+  line-height: 1;
+  color: rgb(134, 133, 133);
+  margin-right: 6px;
+}
+
+.paint__shapes li:last-of-type {
+  margin-right: 0;
+}
+
+.paint__shapes li span {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  border: 0.9px dashed rgb(134, 133, 133);
+  box-sizing: border-box;
+}
+
+.paint__shapes .circle__shape {
+  border-radius: 50%;
+}
+
+.paint__shapes .triangle__shape {
+  position: relative;
+  border: none;
+}
+
 .paint__text .fillText {
   font-weight: 600;
-  text-shadow: 1px 1px 0 #777, -1px 1px 0 #777, -1px -1px 0 #777,
-    1px -1px 0 #777, -1px 0 0 #777, 0 -1px 0 #777, 1px 0 0 #777, 0 1px 0 #777;
+  margin-right: 8px;
+  /* text-shadow: 1px 1px 0 #777, -1px 1px 0 #777, -1px -1px 0 #777,
+    1px -1px 0 #777, -1px 0 0 #777, 0 -1px 0 #777, 1px 0 0 #777, 0 1px 0 #777; */
 }
 .paint__text .borderText {
   font-weight: 600;
@@ -297,8 +346,6 @@ li {
 .paint__text .fillText.pick {
   border: 1px solid rgb(255, 107, 157);
   color: #333;
-  text-shadow: 1px 1px 0 #333, -1px 1px 0 #333, -1px -1px 0 #333,
-    1px -1px 0 #333, -1px 0 0 #333, 0 -1px 0 #333, 1px 0 0 #333, 0 1px 0 #333;
 }
 
 .paint__text .borderText.pick {

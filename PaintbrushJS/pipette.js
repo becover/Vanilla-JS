@@ -12,8 +12,8 @@ function buildRgbaString({ r, g, b, a }) {
 
 function setColor2Canvas({ r, g, b, a }) {
   const colorString = buildRgbaString({ r, g, b, a });
-  currentColor.style.backgroundColor = colorString;
   canvasStatus.color = colorString;
+  currentColor.style.backgroundColor = canvasStatus.color;
   if (canvasStatus.isWriting) {
     onChangeTextColor();
   }
