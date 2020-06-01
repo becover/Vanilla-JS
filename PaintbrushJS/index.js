@@ -134,10 +134,19 @@ function onMouseUp(e) {
   canvasImg.src = "data:image/svg+xml," + encodeURIComponent(xml);
   canvasImg.onload = function () {
     ctx.drawImage(canvasImg, 0, 0, canvas.width, canvas.height);
-    stackCanvasHistory();
     changeToFlagStatus(canvasStatus, "isPainting", false);
-    canvasHistory.poppingLastIndex = true;
+    console.log("redoList.length", canvasHistory.redoList.length);
+    canvasHistory.redoList.length > 0 &&
+      canvasHistory.undoList.push(canvasHistory.redoList.pop());
     canvasHistory.redoList = [];
+    stackCanvasHistory();
+    console.log(
+      "mouseup",
+      canvasHistory.undoList,
+      canvasHistory.undoList.length,
+      canvasHistory.redoList,
+      canvasHistory.redoList.length
+    );
     layerCtx.clearRect(0, 0, canvasStatus.width, canvasStatus.height);
   };
 }
@@ -233,9 +242,11 @@ function handleAlphaValue() {
 function changeToFlagStatus(obj, key, status) {
   return (obj[key] = status);
 }
-
+let a = 0;
 function stackCanvasHistory() {
   canvasHistory.undoList.push(canvas.toDataURL());
+  // a++;
+  // canvasHistory.undoList.push(a);
 }
 
 function addClassPick(arrayList) {
