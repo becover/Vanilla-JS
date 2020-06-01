@@ -1,47 +1,39 @@
-function bindDrawImage(beforeList, afterList) {
-  const LastHistoryIndex = beforeList.pop();
+function move2history(to, from) {
+  const lastImg = to.pop();
+  from.push(lastImg);
+}
+
+function drawingImage2canvas(list) {
   const img = new Image();
-  const src = LastHistoryIndex;
+  const src = list[list.length - 1];
   img.src = src;
   img.onload = function () {
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    afterList.push(LastHistoryIndex);
   };
 }
 
 function handleRedoHistory() {
-  if (canvasHistory.redoList.length <= 0) return false;
-  if (canvasHistory.poppingAfterIndex) {
-    const tossToUndoList = canvasHistory.redoList.pop();
-    canvasHistory.undoList.push(tossToUndoList);
-    changeToFlagStatus(canvasHistory, "poppingAfterIndex", false);
-  }
-  bindDrawImage(canvasHistory.redoList, canvasHistory.undoList);
+  const { undoList, redoList } = canvasHistory;
+
+  if (redoList.length <= 0) return false;
+
+  move2history(redoList, undoList);
+  drawingImage2canvas(undoList);
 }
 
 function handleUndoHistory() {
-  if (canvasHistory.undoList.length <= 0) {
-    ctx.fillStyle = "#fff";
+  const { undoList, redoList } = canvasHistory;
+
+  if (undoList.length <= 0) {
     ctx.clearRect(0, 0, canvasStatus.width, canvasStatus.height);
-    // console.log(canvasHistory.undoList, canvasHistory.undoList.length);
+    return false;
+  } else if (undoList.length === 1) {
+    move2history(undoList, redoList);
+    ctx.clearRect(0, 0, canvasStatus.width, canvasStatus.height);
     return false;
   }
-
-  if (canvasHistory.poppingLastIndex) {
-    const tossToRedoList = canvasHistory.undoList.pop();
-
-    const img = new Image();
-    const src = tossToRedoList;
-    img.src = src;
-    img.onload = function () {
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      canvasHistory.redoList.push(tossToRedoList);
-    };
-    changeToFlagStatus(canvasHistory, "poppingLastIndex", false);
-    ctx.clearRect(0, 0, canvasStatus.width, canvasStatus.height);
-  }
-  bindDrawImage(canvasHistory.undoList, canvasHistory.redoList);
-  changeToFlagStatus(canvasHistory, "poppingAfterIndex", true);
+  move2history(undoList, redoList);
+  drawingImage2canvas(undoList);
 }
 
 undoButton.addEventListener("click", handleUndoHistory);

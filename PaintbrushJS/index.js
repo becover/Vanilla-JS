@@ -133,21 +133,11 @@ function onMouseUp(e) {
     </svg>`;
   canvasImg.src = "data:image/svg+xml," + encodeURIComponent(xml);
   canvasImg.onload = function () {
+    layerCtx.clearRect(0, 0, canvasStatus.width, canvasStatus.height);
     ctx.drawImage(canvasImg, 0, 0, canvas.width, canvas.height);
     changeToFlagStatus(canvasStatus, "isPainting", false);
-    console.log("redoList.length", canvasHistory.redoList.length);
-    canvasHistory.redoList.length > 0 &&
-      canvasHistory.undoList.push(canvasHistory.redoList.pop());
     canvasHistory.redoList = [];
     stackCanvasHistory();
-    console.log(
-      "mouseup",
-      canvasHistory.undoList,
-      canvasHistory.undoList.length,
-      canvasHistory.redoList,
-      canvasHistory.redoList.length
-    );
-    layerCtx.clearRect(0, 0, canvasStatus.width, canvasStatus.height);
   };
 }
 function setCurrentColor2ctx() {
