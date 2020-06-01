@@ -1,8 +1,6 @@
 const canvasHistory = {
   undoList: [],
   redoList: [],
-  poppingLastIndex: true,
-  poppingAfterIndex: true,
 };
 
 const canvasStatus = {

@@ -133,12 +133,11 @@ function onMouseUp(e) {
     </svg>`;
   canvasImg.src = "data:image/svg+xml," + encodeURIComponent(xml);
   canvasImg.onload = function () {
-    ctx.drawImage(canvasImg, 0, 0, canvas.width, canvas.height);
-    stackCanvasHistory();
-    changeToFlagStatus(canvasStatus, "isPainting", false);
-    canvasHistory.poppingLastIndex = true;
-    canvasHistory.redoList = [];
     layerCtx.clearRect(0, 0, canvasStatus.width, canvasStatus.height);
+    ctx.drawImage(canvasImg, 0, 0, canvas.width, canvas.height);
+    changeToFlagStatus(canvasStatus, "isPainting", false);
+    canvasHistory.redoList = [];
+    stackCanvasHistory();
   };
 }
 function setCurrentColor2ctx() {
@@ -233,9 +232,11 @@ function handleAlphaValue() {
 function changeToFlagStatus(obj, key, status) {
   return (obj[key] = status);
 }
-
+let a = 0;
 function stackCanvasHistory() {
   canvasHistory.undoList.push(canvas.toDataURL());
+  // a++;
+  // canvasHistory.undoList.push(a);
 }
 
 function addClassPick(arrayList) {
