@@ -34,7 +34,41 @@ li {
   margin-bottom: -4px;
 }
 
-.paint__layer {
+/* .paint__boardWrap .layerContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.paint__boardWrap .layerContainer .paint__layer-label {
+  width: 25px;
+  height: 30px;
+  position: absolute;
+  left: -25px;
+  background: white;
+  border-radius: 5px 0 0 5px;
+  border: 1px solid #c0c0c0;
+  border-right-style: none;
+  text-align: center;
+  line-height: 30px;
+}
+
+.paint__boardWrap .layerContainer:first-of-type .paint__layer-label {
+  top: 5px;
+}
+
+.paint__boardWrap .layerContainer:nth-of-type(2) .paint__layer-label {
+  top: 38px;
+}
+
+.paint__boardWrap .layerContainer canvas {
+  width: 500px;
+  height: 500px;
+  box-shadow: 1px 1px 5px #c0c0c0, -1px 1px 5px #c0c0c0;
+  border-radius: 5px;
+} */
+
+.drawing__layer {
   position: absolute;
   top: 0;
   left: 0;

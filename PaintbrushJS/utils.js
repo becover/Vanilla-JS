@@ -20,7 +20,7 @@ const alphaRange = $id("paint__color-alpha");
 const canvasWrap = $qSelector(wrap, ".paint__boardWrap");
 const canvas = $qSelector(wrap, ".paint__board");
 const ctx = canvas.getContext("2d");
-const layer = $qSelector(wrap, ".paint__layer");
+const layer = $qSelector(wrap, ".drawing__layer");
 const layerCtx = layer.getContext("2d");
 
 const CLASS_PICK = "pick";
